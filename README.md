@@ -1,2 +1,2 @@
 # safenetwork-node
-Dockerfile for the safe network node.
+Dockerfile for the (Ipv4-only) safe network node.
