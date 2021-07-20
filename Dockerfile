@@ -21,6 +21,8 @@ ENV PATH=$PATH:/root/.safe
 # Create safe folders
 RUN mkdir -p ~/.safe/{node,cli}
 
+RUN echo "Operating System: " $(uname -m)
+
 # Install the safe network node
 RUN curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/releases/latest \ 
 | jq --arg PLATFORM_ARCH "$(echo `uname -m`)" \ 
