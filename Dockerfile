@@ -2,7 +2,7 @@
 FROM arm64v8/alpine:latest
 LABEL version="1.0"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-01-31"
+LABEL release-date="2021-07-20"
 
 # Update and install dependencies
 RUN apk update
