@@ -1,5 +1,5 @@
 # Build SafeNetwork Docker container
-FROM arm64v8/alpine:latest
+FROM alpine:latest
 LABEL version="1.0"
 LABEL maintainer="Folât Pjêrsômêj"
 LABEL release-date="2021-07-20"
