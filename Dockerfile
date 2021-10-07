@@ -11,7 +11,7 @@ RUN apk update && apk add \
     jq
     
 # Create safe folders
-RUN mkdir -p ~/.safe/{node,cli}
+RUN mkdir -p ~/.safe/cli
 
 # Install the safe network command line interface
 RUN curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/latest | \
