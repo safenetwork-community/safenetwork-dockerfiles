@@ -1,5 +1,5 @@
 # safenetwork-node
-Dockerfile for the (Ipv4-only) safe network node.
+Dockerfile for starting an Ipv4-only safe network.
 
 ## Installation
 
