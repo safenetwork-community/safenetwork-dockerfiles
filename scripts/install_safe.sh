@@ -3,7 +3,7 @@
 PLATFORM_ARCH=`uname -m`
 
 case "$PLATFORM_ARCH" in
-  "arm/v7")
+  "armv7l")
   PLATFORM_ARCH="armv7"
   ;;
 esac
