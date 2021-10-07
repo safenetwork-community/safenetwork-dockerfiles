@@ -10,7 +10,7 @@ RUN apk update && apk add \
     curl \
     jq
 
-COPY ../../scripts/install_safe.sh/tmp/
+COPY ../../scripts/install_safe.sh /tmp/
 RUN ./install_safe.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
