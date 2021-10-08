@@ -10,7 +10,7 @@ case "$PLATFORM_ARCH" in
   PLATFORM_ARCH="arm-unknown-linux-musleabi"
   ;;
   *)
-  PLATFORM_ARCH=PLATFORM_ARCH+"-unknown-linux-musl"
+  PLATFORM_ARCH=$PLATFORM_ARCH+"-unknown-linux-musl"
   ;;
 esac
 
