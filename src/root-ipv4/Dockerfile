@@ -1,4 +1,4 @@
-# Build SafeNetwork Docker container
+# Build SafeNetwork podman container
 FROM alpine:3.14
 LABEL version="0.1"
 LABEL maintainer="Folât Pjêrsômêj"
@@ -10,7 +10,7 @@ RUN apk update && apk add \
     curl \
     jq
 
-COPY scripts/install_safe.sh /tmp/
+COPY curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-root/main/scripts/install_safe.sh -o /tmp/install_safe.sh
 RUN sh /tmp/install_safe.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
