@@ -19,7 +19,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: safenetwork-community/joinnode-ipv6
 
 
 jobs:
@@ -47,6 +47,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: type=semver, pattern={{version}}
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -64,7 +65,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: src/rootnode-ipv6/Dockerfile
+          file: src/joinnode-ipv6/Dockerfile
           platforms: linux/amd64,linux/arm64, linux/arm/v7
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}

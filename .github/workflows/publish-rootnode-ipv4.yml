@@ -19,8 +19,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: safenetwork/rootnode-ipv4
-
+  IMAGE_NAME: safenetwork-community/rootnode-ipv4
 
 jobs:
   build:
@@ -47,6 +46,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: type=semver, pattern={{version}}
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
