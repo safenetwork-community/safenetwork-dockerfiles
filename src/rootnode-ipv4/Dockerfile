@@ -1,8 +1,8 @@
-# Build SafeNetwork podman container
+# Build SafeNetwork docker container
 FROM alpine:3.14
-LABEL version="0.1"
+LABEL version="0.2"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-07-20"
+LABEL release-date="2021-10-17"
 
 # Update and install dependencies
 RUN apk update && apk add \
