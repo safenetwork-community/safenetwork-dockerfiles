@@ -46,7 +46,6 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=semver,pattern={{version}}
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
