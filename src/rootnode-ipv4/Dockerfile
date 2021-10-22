@@ -1,8 +1,8 @@
 # Build SafeNetwork docker container
 FROM alpine:3.14
-LABEL version="0.2"
+LABEL version="0.3"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-10-17"
+LABEL release-date="2021-10-22"
 
 # Update and install dependencies
 RUN apk update && apk add \
@@ -10,17 +10,18 @@ RUN apk update && apk add \
     curl \
     jq
 
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-root/main/scripts/install_safe.sh -o /tmp/install_safe.sh
+# Install latest safe network version.
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/install_safe.sh -o /tmp/install_safe.sh
 RUN sh /tmp/install_safe.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:/root/.safe
 
-# Expose PORT of the node 
+# Expose PORT of the node
 EXPOSE 12000
 
+# Install safe node plugin
 RUN safe node install
-RUN safe node run-baby-fleming
 
-# Launch safe on Docker command
-CMD ["safe"]
+# Launch safe root node 
+ENTRYPOINT ["safe","node","run-baby-fleming"]
