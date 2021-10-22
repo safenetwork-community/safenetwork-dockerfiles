@@ -26,7 +26,6 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/la
   -r '.assets[] | select(.name | endswith($PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
   tar xz -C ~/.safe/
 
-# Make profile file with exported PATH and refresh the shell (while building)
-echo 'export PATH=$PATH:/root/.safe/cli' > ~/.profile && source ~/.profile
-
-
+# Add .bashrc and .bash_profile
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bashrc -o ~/.bashrc
