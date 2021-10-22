@@ -27,5 +27,5 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/la
   tar xz -C ~/.safe/
 
 # Add .bashrc and .bash_profile
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bashrc -o ~/.bashrc
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/dev/src/shared_files/.bash_profile -o ~/.bash_profile
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/dev/src/shared_files/.bashrc -o ~/.bashrc
