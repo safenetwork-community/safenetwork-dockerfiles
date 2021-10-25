@@ -7,13 +7,13 @@ name: Publish joinnode-ipv6 package (ghcr.io)
 
 on:
   schedule:
-    - cron: '46 8 1 * *'
+    - cron: '46 8 23 * *'
   push:
-    branches: [ main ]
+    branches: [ main, nightly ]
     # Publish semver tags as releases.
     tags: [ 'v*.*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, nightly ]
 
 env:
   # Use docker.io for Docker Hub if empty

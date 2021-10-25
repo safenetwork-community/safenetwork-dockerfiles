@@ -19,7 +19,5 @@ ENV PATH=$PATH:/root/.safe
 # Expose PORT of the node 
 EXPOSE 12000
 
-RUN safe node install
-
 # Launch safe on Docker command
-CMD ["safe"]
+ENTRYPOINT ["safe"]

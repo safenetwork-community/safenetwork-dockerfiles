@@ -20,8 +20,5 @@ ENV PATH=$PATH:/root/.safe
 # Expose PORT of the node 
 EXPOSE 12000
 
-# Install safe node plugin
-RUN safe node install
-
 # Launch safe on Docker command
 ENTRYPOINT ["safe"]
