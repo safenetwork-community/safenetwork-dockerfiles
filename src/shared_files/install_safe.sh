@@ -14,17 +14,18 @@ case "$PLATFORM_ARCH" in
   ;;
 esac
 
-# Add new paltform if unknown.
-echo $PLATFORM_ARCH
-
 # Create safe folders
-mkdir -p ~/.safe/cli
+mkdir -p ~/.safe/{cli,node}
 
 # Install the safe network command line interface
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/latest | \
   jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
   -r '.assets[] | select(.name | endswith($PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
   tar xz -C ~/.safe/
+
+# Install the safe network node
+curl -L curl --silent https://github.com/maidsafe/safe_network/releases/download/v0.32.0/sn_node-0.32.0-aarch64-unknown-linux-musl.tar.gz | \
+  tar xz -C ~/.safe/node
 
 # Add .bashrc and .bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile
