@@ -21,4 +21,4 @@ ENV PATH=$PATH:/root/.safe
 EXPOSE 12000
 
 # Launch safe root node 
-ENTRYPOINT ["safe","node","run-baby-fleming"]
+CMD ["safe","node","run-baby-fleming"]
