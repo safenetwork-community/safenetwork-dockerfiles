@@ -21,4 +21,4 @@ ENV PATH=$PATH:/root/.safe
 EXPOSE 12000
 
 # Launch safe on Docker command
-ENTRYPOINT ["safe"]
+CMD ["safe"]
