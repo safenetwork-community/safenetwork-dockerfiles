@@ -11,14 +11,17 @@ RUN apk update && apk add \
     jq
 
 # Install latest safe network version.
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/install_safe.sh -o /tmp/install_safe.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/install_safe.sh
 RUN bash /tmp/install_safe.sh
 
+# Install wrapper script
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o ~/.safe/run-rootnode-ipv4.sh
+
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=$PATH:/root/.safe
+ENV PATH=$PATH:~/.safe:~/.safe/node
 
 # Expose PORT of the node
 EXPOSE 12000
 
-# Launch safe root node 
-ENTRYPOINT ["safe","node","run-baby-fleming"]
+# Launch safe root nodes 
+ENTRYPOINT ["~/.safe/run-rootnode-ipv4.sh"]

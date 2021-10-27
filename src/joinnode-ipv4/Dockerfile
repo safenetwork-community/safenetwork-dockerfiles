@@ -10,7 +10,7 @@ RUN apk update && apk add \
     curl \
     jq
 
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/install_safe.sh -o /tmp/install_safe.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/install_safe.sh
 RUN bash /tmp/install_safe.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
