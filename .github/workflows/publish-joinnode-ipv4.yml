@@ -39,7 +39,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
-          version: ubuntu-latest
           buildkitd-flags: --debug
 
       # Extract metadata (tags, labels) for Docker
