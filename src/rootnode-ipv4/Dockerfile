@@ -14,14 +14,11 @@ RUN apk update && apk add \
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/install_safe.sh
 RUN bash /tmp/install_safe.sh
 
-# Install wrapper script
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o ~/.safe/run-rootnode-ipv4.sh
-
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:~/.safe:~/.safe/node
 
 # Expose PORT of the node
 EXPOSE 12000
 
-# Launch safe root nodes 
-ENTRYPOINT ["~/.safe/run-rootnode-ipv4.sh"]
+# Launch safe root node
+ENTRYPOINT ["sn_node", "-vv", "--idle-timeout-msec", "5500", "--keep-alive-interval-msec", "4000", "--skip-igd", "--local-addr", "127.0.0.0:1", "--first"]
