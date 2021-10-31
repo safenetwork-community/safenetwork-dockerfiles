@@ -24,5 +24,5 @@ ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 # Expose PORT of the node 
 EXPOSE 12000
 
-# Launch safe on Docker command
-ENTRYPOINT ["safe"]
+# Launch safe root node
+ENTRYPOINT ["sn_node", "-vv", "--idle-timeout-msec", "5500", "--keep-alive-interval-msec", "4000", "--skip-igd", "--local-addr", "[::1]:12000", "--first"]
