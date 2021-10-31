@@ -25,4 +25,4 @@ ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 EXPOSE 12000
 
 # Launch safe root node
-ENTRYPOINT ["sn_node", "-vv", "--idle-timeout-msec", "5500", "--keep-alive-interval-msec", "4000", "--skip-igd", "--local-addr", "127.0.0.0:1", "--first"]
+ENTRYPOINT ["sn_node", "-vv", "--idle-timeout-msec", "5500", "--keep-alive-interval-msec", "4000", "--skip-igd", "--local-addr", "127.0.0.1:12000", "--first"]
