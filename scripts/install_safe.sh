@@ -15,7 +15,7 @@ case "$PLATFORM_ARCH" in
 esac
 
 # Create safe folders
-mkdir -p ~/.safe/{cli,node/root_dir}
+mkdir -p ~/.safe/{bin,cli,node}
 
 # Install the safe network command line interface
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/latest | \
@@ -30,3 +30,9 @@ curl -L curl --silent https://github.com/maidsafe/safe_network/releases/download
 # Add .bashrc and .bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bashrc -o ~/.bashrc
+
+# Add sn_nodebin.sh
+curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.safe/bin/sn_nodebin.sh -o ~/.safe/bin/sn_nodebin.sh
+
+
+
