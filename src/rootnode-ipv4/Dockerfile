@@ -1,5 +1,5 @@
 # Build SafeNetwork docker container
-FROM alpine:3.14
+FROM docker.io/library/alpine:3.14
 LABEL version="0.3"
 LABEL maintainer="Folât Pjêrsômêj"
 LABEL release-date="2021-10-22"
