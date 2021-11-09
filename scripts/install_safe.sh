@@ -24,7 +24,7 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/la
   tar xz -C ~/.safe/
 
 # Install the safe network node
-curl -L --silent https://github.com/maidsafe/safe_network/releases/download/v0.31.39/sn_node-0.31.39-aarch64-unknown-linux-musl.tar.gz | \
+curl -L --silent https://github.com/maidsafe/safe_network/releases/download/v0.32.0/sn_node-0.32.0-aarch64-unknown-linux-musl.tar.gz | \
   tar xz -C ~/.safe/node
 
 # Add .bashrc and .bash_profile
