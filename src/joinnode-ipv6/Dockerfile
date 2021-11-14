@@ -18,12 +18,12 @@ WORKDIR /home/admin
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/sn_install.sh -o /tmp/sn_install.sh
 RUN bash /tmp/sn_install.sh
 
+# Set ENV PATH (after build will be used to find the safe node command)
+ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
+
 # Adding a list of networks to join
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/sn_add_networks.sh -o /tmp/sn_add_networks.sh
 RUN bash /tmp/sn_add_networks.sh
-
-# Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
 # Default env values
 ENV JOINNODE_IP=::1
