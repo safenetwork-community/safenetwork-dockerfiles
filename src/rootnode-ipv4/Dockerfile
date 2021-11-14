@@ -1,8 +1,8 @@
 # Build SafeNetwork docker container
 FROM docker.io/library/alpine:3.14
-LABEL version="0.3"
+LABEL version="1.0"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-10-22"
+LABEL release-date="2021-11-12"
 
 # Update and install dependencies
 RUN apk update && apk add \
@@ -15,14 +15,18 @@ USER admin
 WORKDIR /home/admin
 
 # Install latest safe network version.
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/install_safe.sh
-RUN bash /tmp/install_safe.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/sn_install.sh
+RUN bash /tmp/sn_install.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
+# Default env values
+ENV ROOTNODE_IP=127.0.0.1
+ENV ROOTNODE_PORT=12000
+
 # Expose PORT of the node
-EXPOSE 12000
+EXPOSE $ROOTNODE_PORT
 
 # Launch safe root node
-ENTRYPOINT ["sn_node", "-vv", "--idle-timeout-msec", "5500", "--keep-alive-interval-msec", "4000", "--skip-igd", "--local-addr", "127.0.0.1:12000", "--first"]
+ENTRYPOINT sn_node -vv --idle-timeout-msec 5500 --keep-alive-interval-msec 4000 --skip-igd --local-addr $ROOTNODE_IP:$ROOTNODE_PORT --first

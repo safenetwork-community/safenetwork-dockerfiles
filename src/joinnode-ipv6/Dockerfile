@@ -1,8 +1,8 @@
 # Build SafeNetwork docker container
 FROM docker.io/library/alpine:3.14
-LABEL version="0.2"
+LABEL version="1.0"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-10-17"
+LABEL release-date="2021-11-12"
 
 # Update and install dependencies
 RUN apk update && apk add \
@@ -14,14 +14,23 @@ RUN adduser -s /bin/bash --disabled-password admin
 USER admin
 WORKDIR /home/admin
 
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/install_safe.sh
-RUN bash /tmp/install_safe.sh
+# Install latest safe network version
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/install_safe.sh -o /tmp/sn_install.sh
+RUN bash /tmp/sn_install.sh
+
+# Adding a list of networks to join
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/add_networks.sh -o /tmp/sn_add_networks.sh
+RUN bash /tmp/sn_add_networks.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
-# Expose PORT of the node 
-EXPOSE 12000
+# Default env values
+ENV JOINNODE_IP=::1
+ENV NETWORK_NAME="local-ipv6"
 
-# Launch safe on Docker command
-ENTRYPOINT ["safe"]
+# Expose PORT of the node 
+EXPOSE $JOINNODE_PORT
+
+# Launch safe join node
+ENTRYPOINT safe network switch $NETWORK_NAME && RUST_LOG=safe_network=info,qp2p=info ~/.safe/node/sn_node --skip-igd
