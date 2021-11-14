@@ -15,7 +15,7 @@ USER admin
 WORKDIR /home/admin
 
 # Install latest safe network version
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/sn_install_safe.sh -o /tmp/sn_install.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/sn_install.sh -o /tmp/sn_install.sh
 RUN bash /tmp/sn_install.sh
 
 # Adding a list of networks to join
