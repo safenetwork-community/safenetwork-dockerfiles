@@ -1,8 +1,8 @@
 # Build SafeNetwork docker container
 FROM docker.io/library/alpine:3.14
-LABEL version="1.0"
+LABEL version="1.1"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-11-12"
+LABEL release-date="2021-11-18"
 
 # Update and install dependencies
 RUN apk update && apk add \
@@ -10,7 +10,8 @@ RUN apk update && apk add \
     curl \
     jq
 
-RUN adduser -s /bin/bash --disabled-password admin
+RUN addgroup -g 1000 admin
+RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
 USER admin
 WORKDIR /home/admin
 
@@ -32,5 +33,8 @@ ENV NETWORK_NAME="local-ipv6"
 # Expose PORT of the node 
 EXPOSE $JOINNODE_PORT
 
+# Assign volume
+VOLUME /home/admin/.safe/cli
+
 # Launch safe join node
-ENTRYPOINT safe network switch $NETWORK_NAME && RUST_LOG=safe_network=info,qp2p=info ~/.safe/node/sn_node --skip-igd
+ENTRYPOINT safe networks switch $NETWORK_NAME && RUST_LOG=safe_network=info,qp2p=info ~/.safe/node/sn_node --skip-igd
