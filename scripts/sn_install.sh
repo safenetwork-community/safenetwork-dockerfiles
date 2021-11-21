@@ -23,9 +23,13 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/la
   -r '.assets[] | select(.name | endswith($PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
   tar xz -C ~/.safe/
 
+chmod a+x ~/.safe/safe
+
 # Install the safe network node
 curl -L --silent https://github.com/maidsafe/safe_network/releases/download/v0.39.0/sn_node-0.39.0-aarch64-unknown-linux-musl.tar.gz | \
-  tar xz -C ~/.safe/node
+  tar xz -C ~/.safe/node/
+
+chmod a+x ~/.safe/node/sn_node
 
 # Add .bashrc and .bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile
