@@ -27,7 +27,7 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/sn_add_networks.sh
 
 # Default env values
-ENV JOINNODE_IP=::1
+ENV JOINNODE_IP=[::1]
 ENV NETWORK_NAME="local-ipv6"
 
 # Expose PORT of the node 

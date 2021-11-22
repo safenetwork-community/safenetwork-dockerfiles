@@ -29,7 +29,11 @@ chmod a+x ~/.safe/safe
 curl -L --silent https://github.com/maidsafe/safe_network/releases/download/v0.39.0/sn_node-0.39.0-aarch64-unknown-linux-musl.tar.gz | \
   tar xz -C ~/.safe/node/
 
+ls -lha /home/admin/.safe/node
+
 chmod a+x ~/.safe/node/sn_node
+
+ls -lha /home/admin/.safe/node
 
 # Add .bashrc and .bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile

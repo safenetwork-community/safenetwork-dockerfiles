@@ -23,7 +23,7 @@ RUN bash /tmp/sn_install.sh
 ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
 # Default env values
-ENV ROOTNODE_IP=::1
+ENV ROOTNODE_IP=[::1]
 ENV ROOTNODE_PORT=12000
 
 # Expose PORT of the node
