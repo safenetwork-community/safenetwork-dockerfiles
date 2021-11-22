@@ -28,6 +28,7 @@ RUN bash /tmp/sn_add_networks.sh
 
 # Default env values
 ENV JOINNODE_IP=127.0.0.1
+ENV JOINNODE_PORT=12000
 ENV NETWORK_NAME="local-ipv4"
 
 # Expose PORT of the node
