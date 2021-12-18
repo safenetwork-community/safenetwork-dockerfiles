@@ -33,4 +33,4 @@ EXPOSE $ROOTNODE_PORT
 VOLUME /home/admin/.safe/cli
 
 # Launch safe root node
-ENTRYPOINT sn_node -vv --idle-timeout-msec 5500 --keep-alive-interval-msec 4000 --skip-igd --local-addr $ROOTNODE_IP:$ROOTNODE_PORT --first
+ENTRYPOINT sn_node -vv --idle-timeout-msec 5500 --keep-alive-interval-msec 4000 --skip-igd --local-addr $ROOTNODE_IP:$ROOTNODE_PORT --public-addr $ROOTNODE_IP:$ROOTNODE_PORT --first
