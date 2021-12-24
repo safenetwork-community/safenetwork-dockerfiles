@@ -27,15 +27,17 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/sn_add_networks.sh
 
 # Default env values
-ENV JOINNODE_IP=127.0.0.1
-ENV JOINNODE_PORT=12000
+ENV CONNODE_IP=10.0.2.100
+ENV CONNODE_PORT=12000
 ENV NETWORK_NAME="local-ipv4"
 
 # Expose PORT of the node
-EXPOSE $JOINNODE_PORT
+EXPOSE $CONNODE_PORT
 
 # Assign volume
 VOLUME /home/admin/.safe/cli
 
 # Launch safe join node
-ENTRYPOINT safe networks switch $NETWORK_NAME && RUST_LOG=safe_network=info,qp2p=info ~/.safe/node/sn_node --skip-igd
+ENTRYPOINT safe networks switch $NETWORK_NAME \
+  && RUST_LOG=safe_network=info,qp2p=info ~/.safe/node/sn_node \
+  --skip-auto-port-forwarding
