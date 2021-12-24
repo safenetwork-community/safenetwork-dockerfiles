@@ -23,14 +23,20 @@ RUN bash /tmp/sn_install.sh
 ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
 # Default env values
-ENV ROOTNODE_IP=127.0.0.1
-ENV ROOTNODE_PORT=12000
+ENV CONNODE_IP=10.0.2.100
+ENV CONNODE_PORT=12000
 
 # Expose PORT of the node
-EXPOSE $ROOTNODE_PORT
+EXPOSE $CONNODE_PORT
 
 # Assign volume
 VOLUME /home/admin/.safe/cli
 
 # Launch safe root node
-ENTRYPOINT sn_node -vv --idle-timeout-msec 5500 --keep-alive-interval-msec 4000 --skip-igd --local-addr $ROOTNODE_IP:$ROOTNODE_PORT --public-addr $ROOTNODE_IP:$ROOTNODE_PORT --first
+ENTRYPOINT sn_node -vv \
+  --idle-timeout-msec 5500 \
+  --keep-alive-interval-msec 4000 \
+  --skip-auto-port-forwarding \
+  --local-addr ${CONNODE_IP}:${CONNODE_PORT} \
+  --public-addr ${CONNODE_IP}:${CONNODE_PORT} \
+  --first
