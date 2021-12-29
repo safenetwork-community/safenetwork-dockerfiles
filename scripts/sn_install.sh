@@ -17,12 +17,10 @@ begins_with_short_option()
 }
 
 _positionals=()
-_arg_node_version=0.46.4
 
 print_help()
 {
-	printf 'Usage: %s [-N|--node-version <arg>] [-h|--help] \n' "$0"
-	printf '\t%s\n' "-N, --node-version: Downloads the given safe node version."
+	printf 'Usage: %s [-h|--help] <node-version> <api-version> <cli-version> \n' "$0"
 	printf '\t%s\n' "-h, --help: Prints help"
 }
 
@@ -34,17 +32,6 @@ parse_commandline()
 	do
 		_key="$1"
 		case "$_key" in
-			-N|--node-version)
-				test $# -lt 2 && die "Missing value for the optional argument '$_key'." 1
-				_arg_node_version="$2"
-				shift
-				;;
-			--node-version=*)
-				_arg_node_version="${_key##--node-version=}"
-				;;
-			-N*)
-				_arg_node_version="${_key##-o}"
-				;;
 			-h|--help)
 				print_help
 				exit 0
@@ -66,16 +53,16 @@ parse_commandline()
 
 handle_passed_args_count()
 {
-	local _required_args_string="'positional-arg'"
-	test "${_positionals_count}" -ge 0 || _PRINT_HELP=yes die "FATAL ERROR: Not enough positional arguments - we require exactly 0, but got only ${_positionals_count}." 0
-	test "${_positionals_count}" -le 0 || _PRINT_HELP=yes die "FATAL ERROR: There were spurious positional arguments --- we expect exactly 0, but got ${_positionals_count} (the last one was: '${_last_positional}')." 0
+	local _required_args_string="'node-version' and 'api-version' and 'cli-version'"
+	test "${_positionals_count}" -ge 3 || _PRINT_HELP=yes die "FATAL ERROR: Not enough positional arguments - we require exactly 3, but got only ${_positionals_count}." 1
+	test "${_positionals_count}" -le 3 || _PRINT_HELP=yes die "FATAL ERROR: There were spurious positional arguments --- we expect exactly 3, but got ${_positionals_count} (the last one was: '${_last_positional}')." 1
 }
 
 
 assign_positional_args()
 {
 	local _positional_name _shift_for=$1
-	_positional_names="_arg_positional_arg "
+	_positional_names="_arg_node_version _arg_api_version _arg_cli_version"
 
 	shift "$_shift_for"
 	for _positional_name in ${_positional_names}
@@ -107,20 +94,13 @@ esac
 # Create safe folders
 mkdir -p ~/.safe/{bin,cli,node}
 
-# Install the safe network command line interface
-curl -L $(curl --silent https://api.github.com/repos/maidsafe/sn_cli/releases/latest | \
-  jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
-  -r '.assets[] | select(.name | endswith($PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
+# Install the safe network
+curl -L https://github.com/maidsafe/safe_network/releases/download/$_arg_node_version-$_arg_api_version-$_arg_cli_version/sn_cli-$_arg_cli_version-$PLATFORM_ARCH.tar.gz | \
   tar xz -C ~/.safe/
-
-chmod a+x ~/.safe/safe
-
-echo "https://github.com/maidsafe/safe_network/releases/download/safe_network-v$_arg_node_version/sn_node-$_arg_node_version-$PLATFORM_ARCH.tar.gz" 
-
-# Install the safe network node
-curl -L https://github.com/maidsafe/safe_network/releases/download/safe_network-v$_arg_node_version/sn_node-$_arg_node_version-$PLATFORM_ARCH.tar.gz | \
+curl -L https://github.com/maidsafe/safe_network/releases/download/$_arg_node_version-$_arg_api_version-$_arg_cli_version/sn_node-$_arg_node_version-$PLATFORM_ARCH.tar.gz | \
   tar xz -C ~/.safe/node/
 
+chmod a+x ~/.safe/safe
 chmod a+x ~/.safe/node/sn_node
 
 # Add .bashrc and .bash_profile
