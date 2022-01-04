@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "test 0"
-
 die()
 {
 	local _ret="${2:-1}"
@@ -9,8 +7,6 @@ die()
 	echo "$1" >&2
 	exit "${_ret}"
 }
-
-echo "test 1"
 
 begins_with_short_option()
 {
@@ -26,8 +22,6 @@ print_help()
 	printf 'Usage: %s [-h|--help] <node-version> <api-version> <cli-version> \n' "$0"
 	printf '\t%s\n' "-h, --help: Prints help"
 }
-
-echo "test 2"
 
 parse_commandline()
 {
@@ -54,16 +48,12 @@ parse_commandline()
 	done
 }
 
-echo "test 3"
-
 handle_passed_args_count()
 {
 	local _required_args_string="'node-version' and 'api-version' and 'cli-version'"
 	test "${_positionals_count}" -ge 3 || _PRINT_HELP=yes die "FATAL ERROR: Not enough positional arguments - we require exactly 3, but got only ${_positionals_count}." 1
 	test "${_positionals_count}" -le 3 || _PRINT_HELP=yes die "FATAL ERROR: There were spurious positional arguments --- we expect exactly 3, but got ${_positionals_count} (the last one was: '${_last_positional}')." 1
 }
-
-echo "test 4"
 
 assign_positional_args()
 {
@@ -83,8 +73,6 @@ parse_commandline "$@"
 handle_passed_args_count
 assign_positional_args 1 "${_positionals[@]}"
 
-echo "test 5"
-
 PLATFORM_ARCH=`uname -m`
 
 case "$PLATFORM_ARCH" in
@@ -99,8 +87,6 @@ case "$PLATFORM_ARCH" in
   ;;
 esac
 
-echo "test 6"
-
 # Create safe folders
 mkdir -p ~/.safe/{bin,cli,node}
 
@@ -110,22 +96,13 @@ curl -L https://github.com/maidsafe/safe_network/releases/download/$_arg_node_ve
 curl -L https://github.com/maidsafe/safe_network/releases/download/$_arg_node_version-$_arg_api_version-$_arg_cli_version/sn_node-$_arg_node_version-$PLATFORM_ARCH.tar.gz | \
   tar xz -C ~/.safe/node/
 
-echo "test 7"
-
 chmod a+x ~/.safe/safe
 chmod a+x ~/.safe/node/sn_node
-
-echo "test 8"
 
 # Add .bashrc and .bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bash_profile -o ~/.bash_profile
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.bashrc -o ~/.bashrc
 
-echo "test 9"
-
 # Add bin files
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.safe/bin/sn_nodebin.sh -o ~/.safe/bin/sn_nodebin.sh
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/.safe/bin/sn_networkbin.sh -o ~/.safe/bin/sn_networkbin.sh
-
-
-
