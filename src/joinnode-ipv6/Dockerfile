@@ -1,14 +1,14 @@
 # Build SafeNetwork docker container
 FROM docker.io/library/alpine:3.14
-LABEL version="1.1"
+LABEL version="1.2"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-11-18"
+LABEL release-date="2022-01-05"
 
 # Update and install dependencies
 RUN apk update && apk add \
-    bash \
-    curl \
-    jq
+  bash \
+  curl \
+  jq
 
 RUN addgroup -g 1000 admin
 RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
