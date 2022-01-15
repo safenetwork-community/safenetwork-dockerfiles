@@ -28,14 +28,14 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/sn_add_networks.sh
 
 # Default env values
-ENV LOC_IP=10.0.2.100
-ENV LOC_PORT=12000
+ENV CON_IP=10.0.2.100
+ENV CON_PORT=12000
 ENV PUB_IP=10.0.2.100
 ENV PUB_PORT=12000
 ENV NETWORK_NAME="local-ipv4"
 
 # Expose PORT of the node
-EXPOSE $LOC_PORT
+EXPOSE $CON_PORT
 
 # Assign volume
 VOLUME /home/admin/.safe/cli
