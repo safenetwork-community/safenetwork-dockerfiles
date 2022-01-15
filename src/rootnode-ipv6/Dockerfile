@@ -1,27 +1,45 @@
 # Build SafeNetwork docker container
-FROM alpine:3.14
-LABEL version="0.2"
+FROM docker.io/library/alpine:3.14
+LABEL version="1.2"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2021-10-17"
+LABEL release-date="2022-01-05"
 
 # Update and install dependencies
 RUN apk update && apk add \
-    bash \
-    curl \
-    jq
+  bash \
+  curl \
+  jq
+
+RUN addgroup -g 1000 admin
+RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
+USER admin
+WORKDIR /home/admin
 
 # Install latest safe network version.
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/src/shared_files/install_safe.sh -o /tmp/install_safe.sh
-RUN sh /tmp/install_safe.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/sn_install.sh -o /tmp/sn_install.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/main/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
+RUN bash /tmp/sn_install_latest.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=$PATH:/root/.safe
+ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
-# Expose PORT of the node 
-EXPOSE 12000
+# Default env values
+ENV CON_IP=[fe80::4e5:d0ff:fe82:a8d5]
+ENV CON_PORT=12000
+ENV PUB_IP=[fe80::4e5:d0ff:fe82:a8d5]
+ENV PUB_PORT=12000
 
-# Install safe node plugin
-RUN safe node install
+# Expose PORT of the node
+EXPOSE $CON_PORT
 
-# Launch safe on Docker command
-ENTRYPOINT ["safe"]
+# Assign volume
+VOLUME /home/admin/.safe/cli
+
+# Launch safe root node
+ENTRYPOINT sn_node -vv \
+  --idle-timeout-msec 5500 \
+  --keep-alive-interval-msec 4000 \
+  --skip-auto-forwarding \
+  --local-addr ${CON_IP}:${CON_PORT} \
+  --public-addr ${PUB_IP}:${PUB_PORT} \
+  --first
