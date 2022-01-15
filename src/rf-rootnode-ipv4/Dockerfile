@@ -22,13 +22,13 @@ RUN bash /tmp/sn_install_latest.sh
 ENV PATH=$PATH:/root/.safe:/root/.safe/node
 
 # Default env values
-ENV CON_IP=10.0.2.100
-ENV CON_PORT=12000
+ENV LOC_IP=10.0.2.100
+ENV LOC_PORT=12000
 ENV PUB_IP=10.0.2.100
 ENV PUB_PORT=12000
 
 # Expose PORT of the node
-EXPOSE $CON_PORT
+EXPOSE $LOC_PORT
 
 # Assign volume
 VOLUME /root/.safe/cli
@@ -38,6 +38,6 @@ ENTRYPOINT sn_node \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
   --skip-auto-port-forwarding \
-  --local-addr ${CON_IP}:${CON_PORT} \
+  --local-addr ${LOC_IP}:${LOC_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
   --first
