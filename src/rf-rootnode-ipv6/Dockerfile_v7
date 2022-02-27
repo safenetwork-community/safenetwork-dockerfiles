@@ -11,29 +11,20 @@ WORKDIR /root
 # Update Alpine package manager
 RUN apk update
 
-# Install download dependencies
+# Download dependencies
 RUN apk add bash curl jq
-
-# Install rust build dependencies
-RUN apk add build-base
-
-# Download rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest-dev/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
 RUN bash /tmp/sn_install_latest.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node
-
-# Install vdash
-RUN cargo install vdash
+ENV PATH=$PATH:/root/.safe:/root/.safe/node
 
 # Default env values
-ENV CON_IP=10.0.2.100
+ENV CON_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV CON_PORT=12000
-ENV PUB_IP=10.0.2.100
+ENV PUB_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV PUB_PORT=12000
 
 # Expose PORT of the node

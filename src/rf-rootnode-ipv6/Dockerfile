@@ -1,17 +1,24 @@
 # Build SafeNetwork docker container
-FROM docker.io/library/alpine:3.14
-LABEL version="1.2"
-LABEL latesttainer="Folât Pjêrsômêj"
-LABEL release-date="2022-01-05"
+FROM docker.io/library/alpine:3.15
+LABEL version="1.3"
+LABEL maintainer="Folât Pjêrsômêj"
+LABEL release-date="2022-02-23"
 
-# Update and install dependencies
-RUN apk update && apk add \
-  bash \
-  curl \
-  jq
-
+# Set user
 USER root
 WORKDIR /root
+
+# Update Alpine package manager
+RUN apk update
+
+# Download dependencies
+RUN apk add bash curl jq
+
+# Install rust build dependencies
+RUN apk add build-base
+
+# Download rust
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
@@ -33,7 +40,7 @@ EXPOSE $CON_PORT
 VOLUME /root/.safe/cli
 
 # Launch safe root node
-ENTRYPOINT sn_node \
+ENTRYPOINT RUST_LOG=safe_network=trace sn_node \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
   --skip-auto-forwarding \
