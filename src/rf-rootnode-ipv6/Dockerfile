@@ -32,6 +32,7 @@ ENV CON_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV CON_PORT=12000
 ENV PUB_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV PUB_PORT=12000
+ENV VERBOSE="-v"
 
 # Expose PORT of the node
 EXPOSE $CON_PORT
@@ -40,7 +41,7 @@ EXPOSE $CON_PORT
 VOLUME /root/.safe/cli
 
 # Launch safe root node
-ENTRYPOINT RUST_LOG=safe_network=trace sn_node \
+ENTRYPOINT RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
   --skip-auto-forwarding \
