@@ -15,10 +15,10 @@ RUN apk update
 RUN apk add bash curl jq
 
 # Install vdash
-RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup
-RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add gcc
-RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y
-RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup; fi
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add gcc; fi
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y; fi
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
