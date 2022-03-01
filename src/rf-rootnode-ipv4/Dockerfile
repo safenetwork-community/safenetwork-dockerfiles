@@ -4,6 +4,8 @@ LABEL version="1.3"
 LABEL maintainer="Folât Pjêrsômêj"
 LABEL release-date="2022-02-23"
 
+ARG TARGETPLATFORM
+
 # Set user
 USER root
 WORKDIR /root
@@ -14,21 +16,18 @@ RUN apk update
 # Install download dependencies
 RUN apk add bash curl jq
 
-# Install rust build dependencies
-RUN apk add build-base
-
-# Download rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+# Install vdash
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add gcc
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
 RUN bash /tmp/sn_install_latest.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node
-
-# Install vdash
-RUN cargo install vdash
+ENV PATH=${PATH}:/root/.safe:/root/.safe/node
 
 # Default env values
 ENV CON_IP=10.0.2.100

@@ -14,11 +14,11 @@ RUN apk update
 # Download dependencies
 RUN apk add bash curl jq
 
-# Install rust build dependencies
-RUN apk add build-base
-
-# Download rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+# Install vdash
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add gcc
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh

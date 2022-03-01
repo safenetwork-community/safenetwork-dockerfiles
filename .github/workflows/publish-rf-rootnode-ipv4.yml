@@ -64,19 +64,7 @@ jobs:
         with:
           context: .
           file: src/rf-rootnode-ipv4/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-      # Build and push Docker arm v7 image with Buildx
-      # Necessary because Alpine linux does not support rust with arm v7
-      - name: Build and push Docker arm v7 image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: src/rf-rootnode-ipv4/Dockerfile_v7
-          platforms: linux/arm/v7
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
