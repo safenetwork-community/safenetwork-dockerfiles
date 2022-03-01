@@ -24,8 +24,8 @@ RUN bash /tmp/sn_install_latest.sh
 ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node
 
 # Install vdash
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add build-base; fi
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup; fi
-RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add gcc; fi
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y; fi
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 
