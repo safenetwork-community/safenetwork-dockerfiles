@@ -46,7 +46,7 @@ VOLUME /root/.safe/cli
 ENTRYPOINT RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
-  --skip-auto-forwarding \
+  --skip-auto-port-forwarding \
   --local-addr ${CON_IP}:${CON_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
   --first
