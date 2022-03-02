@@ -4,6 +4,8 @@ LABEL version="1.3"
 LABEL maintainer="Folât Pjêrsômêj"
 LABEL release-date="2022-02-23"
 
+ARG TARGETPLATFORM
+
 # Set user
 USER root
 WORKDIR /root
