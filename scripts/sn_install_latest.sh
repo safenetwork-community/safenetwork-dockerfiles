@@ -37,3 +37,4 @@ curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dock
 # Add bin files
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin.sh -o ~/.safe/bin/sn_nodebin.sh
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_networkbin.sh -o ~/.safe/bin/sn_networkbin.sh
+chmod a+x ~/.safe/bin/*
