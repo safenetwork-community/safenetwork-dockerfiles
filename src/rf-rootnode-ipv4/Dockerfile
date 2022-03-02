@@ -21,7 +21,7 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/sn_install_latest.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node
+ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
 
 # Install vdash
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add build-base; fi
