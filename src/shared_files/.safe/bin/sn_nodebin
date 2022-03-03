@@ -12,8 +12,8 @@ def nodebin():
       for y in x.iterdir():
         if y.name == "sn_node.log":
           run("tac {} | sed -e '/ERROR/{N;N;q}' | tac | tb".format(y))
-          node_logs_exist = True
-  if node_logs_exist == False:
+          node_logs_exists = True
+  if node_logs_exists == False:
     print("No node logs found.") 
 
 if __name__ == '__main__':
