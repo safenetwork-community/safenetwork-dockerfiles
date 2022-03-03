@@ -4,6 +4,8 @@ alias df='df -h'		# human-readable sizes
 alias free='free -m'		# show sizes in MB
 alias more=less
 
+alias python=python3 # Python default
+
 export EDITOR=/bin/nvim		# Neovim
 alias vim=nvim			
 alias vi=nvim			

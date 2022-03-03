@@ -31,8 +31,8 @@ chmod a+x ~/.safe/safe
 chmod a+x ~/.safe/node/sn_node
 
 # Add .bashrc and .bash_profile
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/latest/shared_files/.bash_profile -o ~/.bash_profile
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/latest/shared_files/.bashrc -o ~/.bashrc
+curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.bash_profile -o ~/.bash_profile
+curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.bashrc -o ~/.bashrc
 
 # Add bin files
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin -o ~/.safe/bin/sn_nodebin

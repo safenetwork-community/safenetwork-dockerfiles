@@ -19,6 +19,9 @@ RUN apk add bash curl jq
 # Install text editor
 RUN apk add neovim
 
+# Install progamming language for bin scripts
+RUN apk add python3
+
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
 RUN bash /tmp/sn_install_latest.sh
