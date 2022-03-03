@@ -1,15 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-root_dir=~/.safe/node/root_dir
-if [ -d "$root_dir" ]; then
-  log_file=$(ls -t1 $root_dir/sn_node.log* 2>/dev/null | head -n 1)
-  if [[ $log_file != ""]]; then
-    tac $log_file | sed -e '/ERROR/{N;N;q}' | tac | tb
-  else
-    echo -e "sn_node log not send\nMissing log file in directory $root_dir"
-    exit
-  fi
-else
-  echo -e "sn_node log not send\nMissing directory $root_dir"
-  exit
-fi
+from pathlib import Path
+from subprocess import run
+
+def nodebin():
+  
+  node_logs_exists = False
+  nodes_path = Path('~/.safe/node').expanduser()  
+  for x in nodes_path.iterdir(): 
+    if x.is_dir() and x.name[0:8] == "node_dir":
+      for y in x.iterdir():
+        if y.name == "sn_node.log":
+          run("tac {} | sed -e '/ERROR/{N;N;q}' | tac | tb".format(y))
+          node_logs_exist = True
+  if node_logs_exist == False:
+    print("No node logs found.") 
+
+if __name__ == '__main__':
+  nodebin()

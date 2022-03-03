@@ -13,8 +13,11 @@ WORKDIR /root
 # Update Alpine package manager
 RUN apk update
 
-# Download dependencies
-RUN apk add bash curl jq
+# Install download dependencies
+RUN apk add bash curl jq 
+
+# Install text editor
+RUN apk add neovim
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh

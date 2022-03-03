@@ -1,8 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-conn_file=~/.safe/node/node_connection_info.config
-if [ -f "$conn_file"]; then
-  cat $conn_file | tb
-else
-  echo -e "node_connection_info.config file does not exist."
-fi
+from subprocess import run
+
+def networkbin():
+  
+  node_logs_exists = False
+  conn_path = Path('~/.safe/node/node_connection_info.config').expanduser()  
+  if conn_path.isFile(): 
+	run("cat {} | tb".format(conn_path))
+  else: 
+    print("{} not found.".format(conn_path)) 
+
+if __name__ == '__main__':
+  networkbin()
