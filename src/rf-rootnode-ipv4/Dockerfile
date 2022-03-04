@@ -2,7 +2,7 @@
 FROM docker.io/library/alpine:3.15
 LABEL version="1.3"
 LABEL maintainer="Folât Pjêrsômêj"
-LABEL release-date="2022-02-23"
+LABEL release-date="2022-03-04"
 
 ARG TARGETPLATFORM
 

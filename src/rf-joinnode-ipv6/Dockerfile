@@ -1,17 +1,26 @@
 # Build SafeNetwork docker container
-FROM docker.io/library/alpine:3.14
-LABEL version="1.2"
-LABEL latesttainer="Folât Pjêrsômêj"
-LABEL release-date="2022-01-05"
+FROM docker.io/library/alpine:3.15
+LABEL version="1.3"
+LABEL maintainer="Folât Pjêrsômêj"
+LABEL release-date="2022-03-04"
 
-# Update and install dependencies
-RUN apk update && apk add \
-  bash \
-  curl \
-  jq
+ARG TARGETPLATFORM
 
+# Set user
 USER root
 WORKDIR /root
+
+# Update Alpine package manager
+RUN apk update
+
+# Install download dependencies
+RUN apk add bash curl jq
+
+# Install text editor
+RUN apk add neovim
+
+# Install progamming language for bin scripts
+RUN apk add python3
 
 # Install latest safe network version
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
