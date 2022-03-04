@@ -38,3 +38,6 @@ curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dock
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin -o ~/.safe/bin/sn_nodebin
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_networkbin -o ~/.safe/bin/sn_networkbin
 chmod a+x ~/.safe/bin/*
+
+# Set default Python 
+ln -s python3 /usr/bin/python
