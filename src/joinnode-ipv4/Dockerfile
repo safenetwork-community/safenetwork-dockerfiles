@@ -9,19 +9,27 @@ ARG TARGETPLATFORM
 # Update Alpine package manager
 RUN apk update
 
-# Install download dependencies
-RUN apk add bash curl jq
+# Install better shell
+RUN apk add bash
+
+# Install download tools
+RUN apk add curl jq
+
+# Install progamming languages and it's package managers
+RUN apk add python3
+RUN apk add py3-pip
 
 # Install text editor
 RUN apk add neovim
 
-# Install progamming language for bin scripts
-RUN apk add python3
+# Install pastebin CLI
+RUN pip install pbincli 
 
 # Install system setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/system_setup.sh -o /tmp/system_setup.sh
 RUN bash /tmp/system_setup.sh
 
+# Add user admin
 RUN addgroup -g 1000 admin
 RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
 USER admin

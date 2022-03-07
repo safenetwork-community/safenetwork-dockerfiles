@@ -7,5 +7,3 @@ alias more=less
 export EDITOR=/bin/nvim		# Neovim
 alias vim=nvim			
 alias vi=nvim			
-alias tb="nc termbin.com 9999"	# pastebin to termbin
-
