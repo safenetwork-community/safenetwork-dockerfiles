@@ -30,11 +30,7 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/relea
 chmod a+x ~/.safe/safe
 chmod a+x ~/.safe/node/sn_node
 
-# Add .bashrc and .bash_profile
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.bash_profile -o ~/.bash_profile
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.bashrc -o ~/.bashrc
-
-# Add bin files
+# Add safe network bin files
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin -o ~/.safe/bin/sn_nodebin
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_networkbin -o ~/.safe/bin/sn_networkbin
 chmod a+x ~/.safe/bin/*

@@ -40,6 +40,10 @@ RUN bash /tmp/system_setup.sh
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
 RUN bash /tmp/sn_install_latest.sh
 
+# Install user setup
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/user_setup.sh -o /tmp/user_setup.sh
+RUN bash /tmp/user_setup.sh
+
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:/root/.safe:/root/.safe/node
 
