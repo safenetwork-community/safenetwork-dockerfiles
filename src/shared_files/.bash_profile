@@ -3,5 +3,3 @@
 #
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-
-export PATH=$PATH:~/.safe/cli
