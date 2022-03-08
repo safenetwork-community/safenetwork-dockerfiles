@@ -16,7 +16,7 @@ RUN apk add bash
 RUN apk add curl jq
 
 # Install progamming language compilers and package managers
-RUN apk build-base
+RUN apk add build-base
 RUN apk add python3
 RUN apk add py3-pip
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup; fi
