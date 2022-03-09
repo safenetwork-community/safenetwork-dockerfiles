@@ -70,4 +70,5 @@ ENTRYPOINT RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --skip-auto-port-forwarding \
   --local-addr ${CON_IP}:${CON_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
-  --first
+  --first \
+  && sleep 3
