@@ -20,7 +20,6 @@ RUN apk add build-base
 RUN apk add python3
 RUN apk add py3-pip
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then apk add rustup; fi
-RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y; fi
 
 # Install text editor
 RUN apk add neovim
@@ -32,10 +31,14 @@ RUN pip install pbincli
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/system_setup.sh -o /tmp/system_setup.sh
 RUN bash /tmp/system_setup.sh
 
+# Add and switch to user
 RUN addgroup -g 1000 admin
 RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
 USER admin
 WORKDIR /home/admin
+
+# Install user-based language compilers and package managers
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y; fi
 
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
