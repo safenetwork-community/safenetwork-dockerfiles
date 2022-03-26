@@ -67,4 +67,6 @@ ENTRYPOINT sn_node -vv \
   --skip-auto-port-forwarding \
   --local-addr ${CON_IP}:${PUB_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
+  --log-dir /home/admin/.safe/node/node_dir_0 \
+  --root-dir /home/admin/.safe/node/node_dir_0 \
   --first
