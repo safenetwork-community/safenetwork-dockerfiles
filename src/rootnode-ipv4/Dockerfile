@@ -37,22 +37,28 @@ RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
 USER admin
 WORKDIR /home/admin
 
-# Install user setup
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/user_setup.sh -o /tmp/user_setup.sh
-RUN bash /tmp/user_setup.sh
-
 # Install latest safe network version.
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
 RUN bash /tmp/sn_install_latest.sh
 
+# Install user setup
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/user_setup.sh -o /tmp/user_setup.sh
+RUN bash /tmp/user_setup.sh
+
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
+ENV PATH=$PATH:/home/admin/.cargo/bin:/home/admin/.safe:/home/admin/.safe/node:/home/admin/.safe/bin
+
+:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
+
+# Install vdash
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 
 # Default env values
 ENV CON_IP=10.0.2.100
 ENV CON_PORT=12000
 ENV PUB_IP=10.0.2.100
 ENV PUB_PORT=12000
+ENV VERBOSE="-v"
 
 # Expose PORT of the node
 EXPOSE $CON_PORT
@@ -61,7 +67,7 @@ EXPOSE $CON_PORT
 VOLUME /home/admin/.safe/cli
 
 # Launch safe root node
-ENTRYPOINT sn_node -vv \
+ENTRYPOINT RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
   --skip-auto-port-forwarding \
