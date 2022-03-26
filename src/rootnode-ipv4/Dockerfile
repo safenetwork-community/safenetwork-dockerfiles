@@ -48,8 +48,6 @@ RUN bash /tmp/user_setup.sh
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:/home/admin/.cargo/bin:/home/admin/.safe:/home/admin/.safe/node:/home/admin/.safe/bin
 
-:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
-
 # Install vdash
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 
