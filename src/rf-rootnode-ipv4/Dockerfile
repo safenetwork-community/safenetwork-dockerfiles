@@ -64,7 +64,7 @@ EXPOSE $CON_PORT
 VOLUME /root/.safe/cli
 
 # Launch safe root node
-ENTRYPOINT RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
+ENTRYPOINT RUST_BACKTRACE=full RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
   --skip-auto-port-forwarding \
