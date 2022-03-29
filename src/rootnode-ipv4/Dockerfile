@@ -54,6 +54,9 @@ ENV PATH=$PATH:/home/admin/.cargo/bin:/home/admin/.safe:/home/admin/.safe/node:/
 # Install vdash
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 
+# Install safe network launch tool
+RUN cargo install sn_launch_tool
+
 # Default env values
 ENV CON_IP=10.0.2.100
 ENV CON_PORT=12000

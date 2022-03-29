@@ -48,6 +48,12 @@ RUN bash /tmp/sn_install_latest.sh
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
+# Install vdash
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
+
+# Install safe network launch tool
+RUN cargo install sn_launch_tool
+
 # Default env values
 ENV CON_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV CON_PORT=12000
