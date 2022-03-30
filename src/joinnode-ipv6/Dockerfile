@@ -32,10 +32,14 @@ RUN pip install pbincli
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/system_setup.sh -o /tmp/system_setup.sh
 RUN bash /tmp/system_setup.sh
 
+# Add user admin
 RUN addgroup -g 1000 admin
 RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
 USER admin
 WORKDIR /home/admin
+
+# Install user-based language compilers and package managers
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y; fi
 
 # Install user setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/user_setup.sh -o /tmp/user_setup.sh
@@ -50,9 +54,7 @@ ENV PATH=$PATH:/home/admin/.safe:/home/admin/.safe/node
 
 # Install vdash
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
-
-# Install safe network launch tool
-RUN cargo install sn_launch_tool
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install sn_launch_tool; fi
 
 # Adding a list of networks to join
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_add_networks.sh -o /tmp/sn_add_networks.sh

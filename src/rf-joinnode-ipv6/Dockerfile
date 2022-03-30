@@ -51,9 +51,6 @@ ENV PATH=$PATH:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install sn_launch_tool; fi
 
-# Install safe network launch tool
-RUN cargo install sn_launch_tool
-
 # Adding a list of networks to join
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_add_networks.sh -o /tmp/sn_add_networks.sh
 RUN bash /tmp/sn_add_networks.sh

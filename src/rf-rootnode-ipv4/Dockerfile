@@ -36,13 +36,13 @@ RUN pip install pbincli
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/system_setup.sh -o /tmp/system_setup.sh
 RUN bash /tmp/system_setup.sh
 
-# Install latest safe network version.
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
-RUN bash /tmp/sn_install_latest.sh
-
 # Install user setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/user_setup.sh -o /tmp/user_setup.sh
 RUN bash /tmp/user_setup.sh
+
+# Install latest safe network version.
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/sn_install_latest.sh -o /tmp/sn_install_latest.sh
+RUN bash /tmp/sn_install_latest.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
@@ -50,9 +50,6 @@ ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
 # Install safe network tools
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install sn_launch_tool; fi
-
-# Install safe network launch tool
-RUN cargo install sn_launch_tool
 
 # Default env values
 ENV CON_IP=10.0.2.100

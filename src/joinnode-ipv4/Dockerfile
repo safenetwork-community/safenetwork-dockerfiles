@@ -38,6 +38,9 @@ RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
 USER admin
 WORKDIR /home/admin
 
+# Install user-based language compilers and package managers
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then rustup-init -y; fi
+
 # Install user setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/scripts/user_setup.sh -o /tmp/user_setup.sh
 RUN bash /tmp/user_setup.sh
