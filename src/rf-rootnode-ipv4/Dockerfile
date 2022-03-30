@@ -47,8 +47,9 @@ RUN bash /tmp/user_setup.sh
 # Set ENV PATH (after build will be used to find the safe node command)
 ENV PATH=${PATH}:/root/.cargo/bin:/root/.safe:/root/.safe/node:/root/.safe/bin
 
-# Install vdash
+# Install safe network tools
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install vdash; fi
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7" ]; then cargo install sn_launch_tool; fi
 
 # Install safe network launch tool
 RUN cargo install sn_launch_tool
