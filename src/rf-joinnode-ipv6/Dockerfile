@@ -70,5 +70,9 @@ VOLUME /root/.safe/cli
 
 # Launch safe join node
 ENTRYPOINT safe networks switch $NETWORK_NAME \
-  && RUST_LOG=safe_network=info,qp2p=info ~/.safe/node/sn_node \
-  --skip-auto-port-forwarding
+  && RUST_LOG=safe_network=info,qp2p=info sn_node ${VERBOSE} \
+  --idle-timeout-msec 5500 \
+  --keep-alive-interval-msec 4000 \
+  --skip-auto-port-forwarding \
+  --local-addr ${CON_IP}:${CON_PORT} \
+  --public-addr ${PUB_IP}:${PUB_PORT} 
