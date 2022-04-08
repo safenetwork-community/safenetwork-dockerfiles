@@ -30,6 +30,12 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/relea
 chmod a+x ~/.safe/safe
 chmod a+x ~/.safe/node/sn_node
 
+if [ "$EUID" -ne 0 ]
+  then 
+  chown root:root ~/.safe/safe
+  chown root:root ~/.safe/node/sn_node
+fi
+
 # Add safe network bin files
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin -o ~/.safe/bin/sn_nodebin
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_networkbin -o ~/.safe/bin/sn_networkbin
