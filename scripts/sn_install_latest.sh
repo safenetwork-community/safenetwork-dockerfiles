@@ -21,20 +21,11 @@ mkdir -p ~/.safe/{bin,cli,node}
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/releases/latest | \
   jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
   -r '.assets[] | select(.name | test("sn_cli.*"+$PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
-  tar xz -C ~/.safe/
+  tar xz -C --no-same-owner ~/.safe/ && chmod a+x ~/.safe/safe
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/releases/latest | \
   jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
   -r '.assets[] | select(.name | test("sn_node.*"+$PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
-  tar xz -C ~/.safe/node/
-
-chmod a+x ~/.safe/safe
-chmod a+x ~/.safe/node/sn_node
-
-if [ "$EUID" -ne 0 ]
-  then 
-  chown root:root ~/.safe/safe
-  chown root:root ~/.safe/node/sn_node
-fi
+  tar xz -C --no-same-owner ~/.safe/node/ && chmod a+x ~/.safe/node/sn_node
 
 # Add safe network bin files
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin -o ~/.safe/bin/sn_nodebin
