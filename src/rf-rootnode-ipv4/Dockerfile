@@ -71,6 +71,6 @@ ENTRYPOINT RUST_BACKTRACE=full RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --skip-auto-port-forwarding \
   --local-addr ${CON_IP}:${CON_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
-  --log-dir /home/admin/.safe/node/node_dir_0 \
-  --root-dir /home/admin/.safe/node/node_dir_0 \
+  --log-dir /root/.safe/node/node_dir_0 \
+  --root-dir /root/.safe/node/node_dir_0 \
   --first
