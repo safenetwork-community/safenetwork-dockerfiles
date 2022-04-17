@@ -62,7 +62,7 @@ ENV VERBOSE="-v"
 EXPOSE $CON_PORT
 
 # Assign volume
-VOLUME /root/.safe/cli
+VOLUME ~/.safe/cli
 
 # Launch safe root node
 ENTRYPOINT RUST_BACKTRACE=full RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
@@ -71,6 +71,6 @@ ENTRYPOINT RUST_BACKTRACE=full RUST_LOG=safe_network=trace sn_node ${VERBOSE} \
   --skip-auto-port-forwarding \
   --local-addr ${CON_IP}:${CON_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
-  --log-dir /root/.safe/node/node_dir_0 \
-  --root-dir /root/.safe/node/node_dir_0 \
+  --log-dir ~/.safe/node/node_dir_0 \
+  --root-dir ~/.safe/node/node_dir_0 \
   --first
