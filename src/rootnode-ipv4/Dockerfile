@@ -10,6 +10,9 @@ ARG TARGETPLATFORM
 RUN apt update
 RUN apt upgrade -y
 
+# Install ip networking application
+RUN apt install -y iproute2
+
 # Install download tools
 RUN apt install -y curl jq
 
