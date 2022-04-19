@@ -4,6 +4,5 @@ curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dock
 
 # Add nvim configuration files
 mkdir -p ~/.config/nvim
-mkdir -p /usr/local/share/lua/5.1
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.config/nvim/init.lua -o ~/.config/nvim/init.lua
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.config/nvim/keymappings.lua -o /usr/local/share/lua/5.1/keymappings.lua
