@@ -50,8 +50,8 @@ RUN rustup default stable
 RUN pip install pbincli 
 
 # Install safe network tools
-RUN cargo install vdash
-RUN cargo install sn_launch_tool
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7"]; then cargo install vdash; fi
+RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool; fi
 
 # Default env values
 ENV CON_IP=10.0.2.100

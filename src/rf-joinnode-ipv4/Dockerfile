@@ -29,6 +29,9 @@ RUN apt install -y neovim
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/system_setup.sh -o /tmp/system_setup.sh
 RUN bash /tmp/system_setup.sh
 
+# Install user specific progamming language compilers
+RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none -y 
+
 # Install user setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/user_setup.sh -o /tmp/user_setup.sh
 RUN bash /tmp/user_setup.sh
@@ -45,8 +48,8 @@ RUN rustup default stable
 RUN pip install pbincli 
 
 # Install safe network tools
-RUN cargo install vdash
-RUN cargo install sn_launch_tool
+RUN if [ "$TARGETPLATFORM" != "linux/arm/v7"]; then cargo install vdash; fi
+RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool; fi
 
 # Adding a list of networks to join
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/sn_add_networks.sh -o /tmp/sn_add_networks.sh
