@@ -12,10 +12,7 @@ WORKDIR /root
 
 # Update ubuntu package manager
 RUN apt update
-RUN apt upgrade
-
-# Install better shell
-RUN apt install -y bash
+RUN apt upgrade -y
 
 # Install download tools
 RUN apt install -y curl jq

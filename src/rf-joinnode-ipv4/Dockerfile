@@ -14,9 +14,6 @@ WORKDIR /root
 RUN apt update
 RUN apt upgrade -y
 
-# Install better shell
-RUN apt install -y bash
-
 # Install download tools
 RUN apt install -y curl jq
 
@@ -24,13 +21,9 @@ RUN apt install -y curl jq
 RUN apt install -y build-essential
 RUN apt install -y python3 python-is-python3
 RUN apt install -y python3-pip
-RUN apt install -y rustup
 
 # Install text editor
 RUN apt install -y neovim
-
-# Install pastebin CLI
-RUN pip install pbincli 
 
 # Install system setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/system_setup.sh -o /tmp/system_setup.sh

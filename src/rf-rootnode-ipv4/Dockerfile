@@ -12,24 +12,18 @@ WORKDIR /root
 
 # Update ubuntu package manager
 RUN apt update
-RUN apt upgrade
-
-# Install better shell
-RUN apt install -y bash
+RUN apt upgrade -y
 
 # Install download tools
 RUN apt install -y curl jq
 
 # Install progamming language compilers and package managers
-RUN apt install build-essential
+RUN apt install -y build-essential
 RUN apt install -y python3 python-is-python3
 RUN apt install -y python3-pip
 
 # Install text editor
 RUN apt install -y neovim
-
-# Install pastebin CLI
-RUN pip install pbincli 
 
 # Install user specific progamming language compilers
 RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none -y 

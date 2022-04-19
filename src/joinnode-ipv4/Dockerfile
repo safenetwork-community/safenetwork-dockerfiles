@@ -8,10 +8,7 @@ ARG TARGETPLATFORM
 
 # Update Ubuntu package manager
 RUN apt update
-RUN apt upgrade
-
-# Install better shell
-RUN apt install -y bash
+RUN apt upgrade -y
 
 # Install download tools
 RUN apt install -y curl jq
@@ -29,8 +26,8 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/system_setup.sh
 
 # Add user admin
-RUN addgroup -g 1000 admin
-RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
+RUN groupadd -g 1000 admin
+RUN useradd -m -s /bin/bash --uid 1000 -g admin admin
 USER admin
 WORKDIR /home/admin
 

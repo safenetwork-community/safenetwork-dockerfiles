@@ -26,8 +26,8 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/system_setup.sh
 
 # Add admin user
-RUN addgroup -g 1000 admin
-RUN adduser -s /bin/bash --ingroup admin --uid 1000 --disabled-password admin
+RUN groupadd -g 1000 admin
+RUN useradd -m -s /bin/bash --uid 1000 -g admin admin
 USER admin
 WORKDIR /home/admin
 
