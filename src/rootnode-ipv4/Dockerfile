@@ -46,7 +46,7 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/user_setup.sh
 
 # Set ENV PATH (after build will be used to find the safe node command)
-ENV PATH=$PATH:/home/admin/.cargo/bin:/home/admin/.safe:/home/admin/.safe/node:/home/admin/.safe/bin
+ENV PATH=$PATH:/home/admin/.local/bin:/home/admin/.cargo/bin:/home/admin/.safe:/home/admin/.safe/node:/home/admin/.safe/bin
 
 # Install user specific programming language core applications
 RUN rustup default stable
