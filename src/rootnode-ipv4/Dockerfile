@@ -6,6 +6,9 @@ LABEL release-date="2022-04-17"
 
 ARG TARGETPLATFORM
 
+# Allow port >=443
+RUN systctl net.ipv4.ip_unprivileged_port_start=443 
+
 # Update ubuntu package manager
 RUN apt update
 RUN apt upgrade -y
