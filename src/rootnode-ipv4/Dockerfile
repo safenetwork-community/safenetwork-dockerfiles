@@ -66,6 +66,9 @@ ENV VERBOSE="-v"
 # Expose PORT of the node
 EXPOSE $CON_PORT
 
+# Expose port of pastebin program
+EXPOSE 443
+
 # Assign volume
 VOLUME /home/admin/.safe/cli
 
