@@ -24,6 +24,9 @@ RUN apt install -y python3-pip
 # Install text editor
 RUN apt install -y neovim
 
+# Allow port 443 
+RUN echo net.ipv4.ip_unprivileged_port_start=443 | tee -a /etc/sysctl.conf
+
 # Install system setup
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/system_setup.sh -o /tmp/system_setup.sh
 RUN bash /tmp/system_setup.sh
