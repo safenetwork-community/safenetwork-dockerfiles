@@ -81,19 +81,11 @@ EXPOSE 443
 # Assign volume
 VOLUME /home/admin/.safe/cli
 
-# Launch safe root node
-ENTRYPOINT if [ -z $NETWORK_NAME ]; then \
-  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error sn_node ${VERBOSE} \
-  --idle-timeout-msec ${IDLE_TIMEOUT_MSEC} \
-  --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
-  --skip-auto-port-forwarding \
-  --local-addr ${CON_IP}:${PUB_PORT} \
-  --public-addr ${PUB_IP}:${PUB_PORT} \
-  --log-dir ${LOG_DIR} \
-  --root-dir ${ROOT_DIR} \
-  --first \
-  else \
-  safe networks switch $NETWORK_NAME \
-  && RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error,qp2p=error sn_node \
-  --skip-auto-port-forwarding \
-  fi
+# Launch safe node
+ENTRYPOINT /tmp/run_safenode.sh ${NETWORK_NAME} ${VERBOSE} \
+  ${CON_IP} ${CON_PORT} \
+  ${PUB_IP} ${PUB_PORT} \
+  ${IDLE_TIMEOUT_MSEC} \
+  ${KEEP_ALIVE_INTERVAL_MSEC} \
+  ${LOG_DIR} \
+  ${ROOT_DIR}

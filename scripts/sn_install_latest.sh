@@ -27,7 +27,4 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/relea
   -r '.assets[] | select(.name | test("sn_node.*"+$PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
   tar xz --no-same-owner -C ~/.safe/node/ && chmod a+x ~/.safe/node/sn_node
 
-# Add safe network bin files
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_nodebin -o ~/.safe/bin/sn_nodebin
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/sn_networkbin -o ~/.safe/bin/sn_networkbin
-chmod a+x ~/.safe/bin/*
+curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/run_safenode.sh -o /tmp/run_safenode.sh
