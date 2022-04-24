@@ -85,8 +85,6 @@ VOLUME /home/admin/.safe/cli
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/run_safenode.sh -o /tmp/run_safenode.sh
 RUN chmod a+x /tmp/run_safenode.sh
 
-RUN bash -c "cat /tmp/run_safenode.sh"
-
 # Launch safe node
 ENTRYPOINT /tmp/run_safenode.sh ${NETWORK_NAME} ${VERBOSE} \
   ${CON_IP} ${CON_PORT} \
