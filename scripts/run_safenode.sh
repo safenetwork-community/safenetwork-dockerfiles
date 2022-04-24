@@ -11,7 +11,7 @@ KEEP_ALIVE_INTERVAL_MSEC=$8
 LOG_DIR=$9
 ROOT_DIR=$10
 
-if [ -z $NETWORK_NAME ] then
+if [ -z $NETWORK_NAME ]; then
 RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error sn_node ${VERBOSE} \
   --idle-timeout-msec ${IDLE_TIMEOUT_MSEC} \
   --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \

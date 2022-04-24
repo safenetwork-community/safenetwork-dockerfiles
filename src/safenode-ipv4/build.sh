@@ -6,3 +6,4 @@ sudo podman build -t $CON_NAME --build-arg TARGETPLATFORM=amd64 .
 sudo podman run -it $CON_NAME
 sudo podman stop $CON_NAME
 sudo podman rm -f $CON_NAME
+sudo podman image rm $CON_NAME
