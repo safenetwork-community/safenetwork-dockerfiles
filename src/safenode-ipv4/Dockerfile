@@ -68,9 +68,10 @@ ENV VERBOSE="-v"
 ENV NETWORK_NAME=
 ENV IDLE_TIMEOUT_MSEC=5500
 ENV KEEP_ALIVE_INTERVAL_MSEC=4000
-# ENV SKIP_AUTO_PORT_FORWARDING="True"
+ENV SKIP_AUTO_PORT_FORWARDING=true
 ENV LOG_DIR=/home/admin/.safe/node/node_dir_0
 ENV ROOT_DIR=/home/admin/.safe/node/node_dir_0
+ENV FIRST=false
 
 # Expose PORT of the node
 EXPOSE $CON_PORT
@@ -86,10 +87,13 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN chmod a+x /tmp/run_safenode.sh
 
 # Launch safe node
-ENTRYPOINT /tmp/run_safenode.sh ${NETWORK_NAME} ${VERBOSE} \
-  ${CON_IP} ${CON_PORT} \
-  ${PUB_IP} ${PUB_PORT} \
-  ${IDLE_TIMEOUT_MSEC} \
-  ${KEEP_ALIVE_INTERVAL_MSEC} \
-  ${LOG_DIR} \
-  ${ROOT_DIR}
+ENTRYPOINT /tmp/run_safenode.sh --name ${NETWORK_NAME} \
+  --verbose ${VERBOSE} \
+  --con-ip ${CON_IP} --con-port ${CON_PORT} \
+  --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
+  --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING}} \
+  --idle_timeout_msec ${IDLE_TIMEOUT_MSEC} \
+  --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
+  --log-dir ${LOG_DIR} \
+  --root-dir ${ROOT_DIR} \
+  --first ${FIRST}

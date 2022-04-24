@@ -1,9 +1,9 @@
 #!/bin/bash
 
+IMG_NAME=safe_node_img
 CON_NAME=safe_node
 
-sudo podman build -t $CON_NAME --build-arg TARGETPLATFORM=amd64 .
-sudo podman run -it $CON_NAME
+sudo podman build -t $IMG_NAME --build-arg TARGETPLATFORM=amd64 .
+sudo podman run --name $CON_NAME -it $IMG_NAME
 sudo podman stop $CON_NAME
-sudo podman rm -f $CON_NAME
-sudo podman image rm $CON_NAME
+sudo podman rm $CON_NAME
