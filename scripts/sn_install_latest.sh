@@ -26,5 +26,3 @@ curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/relea
   jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
   -r '.assets[] | select(.name | test("sn_node.*"+$PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
   tar xz --no-same-owner -C ~/.safe/node/ && chmod a+x ~/.safe/node/sn_node
-
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/run_safenode.sh -o /tmp/run_safenode.sh
