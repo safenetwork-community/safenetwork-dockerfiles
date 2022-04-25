@@ -91,7 +91,7 @@ ENTRYPOINT /tmp/run_safenode.sh --name ${NETWORK_NAME} \
   --verbose ${VERBOSE} \
   --con-ip ${CON_IP} --con-port ${CON_PORT} \
   --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
-  --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING}} \
+  --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING} \
   --idle_timeout_msec ${IDLE_TIMEOUT_MSEC} \
   --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
   --log-dir ${LOG_DIR} \
