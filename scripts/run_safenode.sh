@@ -42,8 +42,8 @@ do
   esac
 done
 
-if [ "$FIRST" = false ]; then 
-  safe network switch ${NETWORK_NAME}
+if [ "$FIRST" = false ]; then
+  safe networks switch ${NETWORK_NAME}
 else
   FIRST_C="--first"
 fi 
@@ -61,3 +61,10 @@ RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error,qp2p=error
   --log-dir ${LOG_DIR} \
   --root-dir ${ROOT_DIR} \
   ${FIRST_C}
+
+if [ "$FIRST" = true ]; then 
+  safe networks add ${NETWORK_NAME}
+  safe networks switch ${NETWORK_NAME}
+fi 
+
+
