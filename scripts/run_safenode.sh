@@ -26,16 +26,16 @@ do
   case "$1" in 
     --name) NETWORK_NAME="$2"; shift 2;;
     --verbose) VERBOSE="$2"; shift 2;;
-    --con_ip) CON_IP="$2"; shift 2;;
-    --con_port) CON_PORT="$2"; shift 2;;
-    --pub_ip) PUB_IP="$2"; shift 2;;
-    --pub_port) PUB_PORT="$2"; shift 2;;
-    --first) FIRST="$2"; shift 2;;
-    --idle_timeout_msec) IDLE_TIMEOUT_MSEC="$2"; shift 2;;
-    --keep_alive_interval_msec) KEEP_ALIVE_INTERVAL_MSEC="$2"; shift 2;;
-    --log_dir) LOG_DIR="$2"; shift 2;;
-    --root_dir) ROOT_DIR="$2"; shift 2;;
     --skip-auto-port-forwarding) SKIP_AUTO_PORT_FOWARDING="$2"; shift 2;;
+    --idle-timeout-msec) IDLE_TIMEOUT_MSEC="$2"; shift 2;;
+    --keep-alive-interval-msec) KEEP_ALIVE_INTERVAL_MSEC="$2"; shift 2;;
+    --con-ip) CON_IP="$2"; shift 2;;
+    --con-port) CON_PORT="$2"; shift 2;;
+    --pub-ip) PUB_IP="$2"; shift 2;;
+    --pub-port) PUB_PORT="$2"; shift 2;;
+    --log-dir) LOG_DIR="$2"; shift 2;;
+    --root-dir) ROOT_DIR="$2"; shift 2;;
+    --first) FIRST="$2"; shift 2;;
     --) shift; break ;;
     *) echo "Unexpected option: $1 - this should not happen."
        usage ;;
@@ -45,7 +45,7 @@ done
 if [ "$FIRST" = false ]; then
   safe networks switch ${NETWORK_NAME}
 else
-  FIRST_C="--first"
+  FIRST_C=--first
 fi 
 
 if [ "$SKIP_AUTO_PORT_FOWARDING" = true ]; then
@@ -55,7 +55,7 @@ fi
 RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error,qp2p=error sn_node ${VERBOSE} \
   --idle-timeout-msec ${IDLE_TIMEOUT_MSEC} \
   --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
-  ${SKIP_AUTO_PORT_FOWARDING} \
+  ${SKIP_AUTO_PORT_FOWARDING_C} \
   --local-addr ${CON_IP}:${PUB_PORT} \
   --public-addr ${PUB_IP}:${PUB_PORT} \
   --log-dir ${LOG_DIR} \
