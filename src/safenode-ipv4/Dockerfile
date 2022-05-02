@@ -91,11 +91,11 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN bash /tmp/user_setup.sh
 
 # Download safe node run script
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/run_safenode.sh -o /tmp/run_safenode.sh
-RUN chmod a+x /tmp/run_safenode.sh
+RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/run_safenode.sh -o ~/.safe/bin/run_safenode.sh
+RUN chmod a+x ~/.safe/bin/run_safenode.sh
 
 # Launch safe node
-ENTRYPOINT /tmp/run_safenode.sh --name ${NETWORK_NAME} \
+ENTRYPOINT ~/.safe/bin/run_safenode.sh --name ${NETWORK_NAME} \
   ${VERBOSE} \
   --num-node ${NUM_NODES} \
   --con-ip ${CON_IP} --con-port ${CON_PORT} \
