@@ -60,15 +60,16 @@ RUN if [ "$TARGETPLATFORM" != "linux/arm/v7"]; then cargo install vdash; fi
 RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool; fi
 
 # Default env values
+ENV NETWORK_NAME=
+ENV VERBOSE="-v"
+ENV NUM_NODES=1
+ENV SKIP_AUTO_PORT_FORWARDING=true
+ENV IDLE_TIMEOUT_MSEC=5500
+ENV KEEP_ALIVE_INTERVAL_MSEC=4000
 ENV CON_IP=10.0.2.100
 ENV CON_PORT=12000
 ENV PUB_IP=10.0.2.100
 ENV PUB_PORT=12000
-ENV VERBOSE="-v"
-ENV NETWORK_NAME=
-ENV IDLE_TIMEOUT_MSEC=5500
-ENV KEEP_ALIVE_INTERVAL_MSEC=4000
-ENV SKIP_AUTO_PORT_FORWARDING=true
 ENV LOG_DIR=/home/admin/.safe/node/node_dir_0
 ENV ROOT_DIR=/home/admin/.safe/node/node_dir_0
 ENV FIRST=false
@@ -92,7 +93,8 @@ RUN chmod a+x /tmp/run_safenode.sh
 
 # Launch safe node
 ENTRYPOINT /tmp/run_safenode.sh --name ${NETWORK_NAME} \
-  --verbose ${VERBOSE} \
+  ${VERBOSE} \
+  --num-node ${NUM_NODES} \
   --con-ip ${CON_IP} --con-port ${CON_PORT} \
   --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
   --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING} \
