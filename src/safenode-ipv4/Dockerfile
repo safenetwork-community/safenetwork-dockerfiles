@@ -95,7 +95,7 @@ RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-
 RUN chmod a+x ~/.safe/bin/run_safenode.sh
 
 # Launch safe node
-ENTRYPOINT ~/.safe/bin/run_safenode.sh --name ${NETWORK_NAME} \
+ENTRYPOINT echo "test" && ls -lha ~/.safe/bin/ && ~/.safe/bin/run_safenode.sh --name ${NETWORK_NAME} \
   ${VERBOSE} \
   --num-node ${NUM_NODES} \
   --con-ip ${CON_IP} --con-port ${CON_PORT} \
