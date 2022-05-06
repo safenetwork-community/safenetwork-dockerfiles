@@ -1,4 +1,4 @@
-name: Publish rootnode-ipv6 package (ghcr.io)
+name: Publish safenode-ipv6 package (ghcr.io)
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -14,12 +14,11 @@ on:
     tags: [ 'v*.*' ]
   pull_request:
     branches: [ ubuntu ]
-
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: safenetwork-community/rootnode-ipv6
+  IMAGE_NAME: safenetwork-community/safenode-ipv6
 
 jobs:
   build:
@@ -63,7 +62,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: src/rootnode-ipv6/Dockerfile
+          file: src/safenode-ipv6/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
