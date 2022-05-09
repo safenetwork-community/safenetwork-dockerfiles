@@ -21,8 +21,14 @@ mkdir -p ~/.safe/{bin,cli,node}
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/releases/latest | \
   jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
   -r '.assets[] | select(.name | test("sn_cli.*"+$PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
-  tar xz --no-same-owner -C ~/.safe/ && chmod a+x ~/.safe/safe
+  tar xz --no-same-owner -C ~/.safe/
+ls -lha ~/.safe/
+chmod a+x ~/.safe/safe
+ls -lha ~/.safe/
+ls -lha ~/.safe/node
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/releases/latest | \
   jq --arg PLATFORM_ARCH "$PLATFORM_ARCH" \
   -r '.assets[] | select(.name | test("sn_node.*"+$PLATFORM_ARCH+".tar.gz")).browser_download_url') | \
-  tar xz --no-same-owner -C ~/.safe/node/ && chmod a+x ~/.safe/node/sn_node
+  tar xz --no-same-owner -C ~/.safe/node/
+ls -lha ~/.safe/node
+chmod a+x ~/.safe/node/sn_node
