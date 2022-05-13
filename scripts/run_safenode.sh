@@ -3,12 +3,13 @@
 PROG_NAME=run_safenode
 
 SHORT_OPTS=hVv
-LONG_OPTS="name:,verbose:,num-nodes:,\
+LONG_OPTS="name:,log-level:,num-nodes:,\
 skip-auto-port-forwarding:,\
 con-ip:,con-port:,pub-ip:,pub-port:,\
 idle-timeout-msec:,keep-alive-interval-msec:,\
 log-dir:,root-dir:,first:,version,help"
 
+LOG_LEVEL=error
 IDLE_TIMEOUT_MSEC=4000
 KEEP_ALIVE_INTERVAL_MSEC=5500
 
@@ -27,7 +28,7 @@ version()
 usage()
 {
   echo "Usage: run_safenode [ --name NETWORK_NAME ] 
-    [ --verbose VERBOSE ]
+    [ --log-level LOG_LEVEL ]
     [ --num-nodes NUM_NODES ]
     [ --skip-auto-port-forwarding SKIP_AUTO_PORT_FORWARDING ]
     [ --idle-timeout-msec IDLE_TIMEOUT_MSEC ]
@@ -54,7 +55,7 @@ while :
 do
   case "$1" in 
     --name) NETWORK_NAME="$2"; shift 2;;
-    -v | --verbose) VERBOSE+=v; shift ;;
+    --log-level) LOG_LEVEL+="$2"; shift ;;
     --num-nodes) NUM_NODES="$2"; shift 2;;
     --skip-auto-port-forwarding) SKIP_AUTO_PORT_FORWARDING="$2"; shift 2;;
     --idle-timeout-msec) IDLE_TIMEOUT_MSEC="$2"; shift 2;;
@@ -67,16 +68,19 @@ do
     --root-dir) ROOT_DIR="$2"; shift 2;;
     --first) FIRST="$2"; shift 2;;
     -h | --help) help ;;
-    -V | --version) version ;;
+    -v | --version) version ;;
     --) shift; break ;;
     *) echo "Unexpected option: $1 - this should not happen."
        usage ;;
   esac
 done
 
-if [ -n "$VERBOSE" ]; then
-  VERBOSE_OPT=" -${VERBOSE}"
-fi
+case $LOG_LEVEL in
+  "warn") VERBOSE_OPT="-v";;
+  "info") VERBOSE_OPT="-vv" ;;
+  "debug") VERBOSE_OPT="-vvv" ;;
+  "trace") VERBOSE_OPT="-vvvv" ;;
+esac
 
 if [ "$SKIP_AUTO_PORT_FORWARDING" = true ]; then
   SKIP_AUTO_PORT_FORWARDING_OPT=" --skip-auto-port-forwarding"
@@ -107,20 +111,16 @@ fi
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 
-#RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error,qp2p=error sn_node\
-#${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-#${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT}
+RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=${LOG_LEVEL},qp2p=${LOG_EVEL} sn_node\
+${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
+${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT}
 
 for (( i = 1; i <= NUM_NODES; i++ ))
   do
   CON_PORT=$(($CON_PORT + $i))
   PUB_PORT=$(($PUB_PORT + $i))
 
-#echo RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error,qp2p=error sn_node\
-#${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-#${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
-
-  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=error,qp2p=error sn_node\
+  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=${LOG_LEVEL},qp2p=${LOG_LEVEL} sn_node\
 ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
 ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
 

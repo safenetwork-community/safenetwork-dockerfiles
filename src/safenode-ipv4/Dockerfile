@@ -61,7 +61,7 @@ RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool
 
 # Default env values
 ENV NETWORK_NAME=
-ENV VERBOSE="-v"
+ENV LOG_LEVEL="error"
 ENV NUM_NODES=1
 ENV SKIP_AUTO_PORT_FORWARDING=true
 ENV IDLE_TIMEOUT_MSEC=5500
@@ -96,7 +96,7 @@ RUN chmod a+x ~/.safe/bin/run_safenode.sh
 
 # Launch safe node
 ENTRYPOINT ~/.safe/bin/run_safenode.sh --name ${NETWORK_NAME} \
-  ${VERBOSE} \
+  --log_level ${LOG_LEVEL} \
   --num-node ${NUM_NODES} \
   --con-ip ${CON_IP} --con-port ${CON_PORT} \
   --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
