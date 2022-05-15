@@ -90,7 +90,7 @@ RUN chmod a+x ~/.safe/bin/run_safenode.sh
 
 # Launch safe node
 ENTRYPOINT ~/.safe/bin/run_safenode.sh --name ${NETWORK_NAME} \
-  --log_level ${LOG_LEVEL} \
+  --log-level ${LOG_LEVEL} \
   --num-node ${NUM_NODES} \
   --con-ip ${CON_IP} --con-port ${CON_PORT} \
   --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
