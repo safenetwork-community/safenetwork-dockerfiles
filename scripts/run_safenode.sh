@@ -55,7 +55,7 @@ while :
 do
   case "$1" in 
     --name) NETWORK_NAME="$2"; shift 2;;
-    --log-level) LOG_LEVEL+="$2"; shift ;;
+    --log-level) LOG_LEVEL="$2"; shift 2;;
     --num-nodes) NUM_NODES="$2"; shift 2;;
     --skip-auto-port-forwarding) SKIP_AUTO_PORT_FORWARDING="$2"; shift 2;;
     --idle-timeout-msec) IDLE_TIMEOUT_MSEC="$2"; shift 2;;
