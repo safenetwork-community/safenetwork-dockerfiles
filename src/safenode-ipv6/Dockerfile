@@ -70,6 +70,9 @@ ENV CON_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV CON_PORT=12000
 ENV PUB_IP=[fe80::4e5:d0ff:fe82:a8d5]
 ENV PUB_PORT=12000
+#ENV LOG_DIR="/home/admin/.safe/node/node_dir_0"
+#ENV ROOT_DIR="/home/admin/.safe/node/node_dir_0"
+#ENV FIRST=false
 
 # Expose PORT of the node
 EXPOSE $CON_PORT
