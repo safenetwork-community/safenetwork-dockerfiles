@@ -73,9 +73,6 @@ ENV PUB_PORT=12000
 ENV LOG_DIR=/home/admin/.safe/node/node_dir_0
 ENV ROOT_DIR=/home/admin/.safe/node/node_dir_0
 ENV FIRST=false
-ENV LOG_DIR=/home/admin/.safe/node/node_dir_0
-ENV ROOT_DIR=/home/admin/.safe/node/node_dir_0
-ENV FIRST=false
 
 # Expose PORT of the node
 EXPOSE $CON_PORT
