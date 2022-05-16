@@ -70,8 +70,8 @@ ENV CON_IP=10.0.2.100
 ENV CON_PORT=12000
 ENV PUB_IP=10.0.2.100
 ENV PUB_PORT=12000
-ENV LOG_DIR=/home/admin/.safe/node/node_dir_0
-ENV ROOT_DIR=/home/admin/.safe/node/node_dir_0
+ENV LOG_DIR="/home/admin/.safe/node/node_dir_0"
+ENV ROOT_DIR="/home/admin/.safe/node/node_dir_0"
 ENV FIRST=false
 
 # Expose PORT of the node
@@ -95,11 +95,10 @@ RUN chmod a+x ~/.safe/bin/run_safenode.sh
 ENTRYPOINT ~/.safe/bin/run_safenode.sh --name ${NETWORK_NAME} \
   --log-level ${LOG_LEVEL} \
   --num-node ${NUM_NODES} \
-  --con-ip ${CON_IP} --con-port ${CON_PORT} \
-  --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
   --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING} \
   --idle-timeout-msec ${IDLE_TIMEOUT_MSEC} \
   --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
-  --log-dir ${LOG_DIR} \
-  --root-dir ${ROOT_DIR} \
+  --con-ip ${CON_IP} --con-port ${CON_PORT} \
+  --pub-ip ${PUB_IP} --pub-port ${PUB_PORT} \
+  --log-dir ${LOG_DIR} --root-dir ${ROOT_DIR} \
   --first ${FIRST}
