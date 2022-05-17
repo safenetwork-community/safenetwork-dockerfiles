@@ -70,9 +70,9 @@ ENV CON_IP=10.0.2.100
 ENV CON_PORT=12000
 ENV PUB_IP=10.0.2.100
 ENV PUB_PORT=12000
-#ENV LOG_DIR="/home/admin/.safe/node/node_dir_0"
-#ENV ROOT_DIR="/home/admin/.safe/node/node_dir_0"
-#ENV FIRST=false
+ENV LOG_DIR="/home/admin/.safe/node/node_dir_0"
+ENV ROOT_DIR="/home/admin/.safe/node/node_dir_0"
+ENV FIRST=false
 
 # Expose PORT of the node
 EXPOSE $CON_PORT

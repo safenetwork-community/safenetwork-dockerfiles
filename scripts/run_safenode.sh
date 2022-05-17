@@ -9,7 +9,7 @@ con-ip:,con-port:,pub-ip:,pub-port:,\
 idle-timeout-msec:,keep-alive-interval-msec:,\
 log-dir:,root-dir:,first:,version,help"
 
-LOG_LEVEL=error
+LOG_LEVEL="error"
 IDLE_TIMEOUT_MSEC=4000
 KEEP_ALIVE_INTERVAL_MSEC=5500
 
@@ -76,10 +76,10 @@ do
 done
 
 case $LOG_LEVEL in
-  "warn") VERBOSE_OPT="-v";;
-  "info") VERBOSE_OPT="-vv" ;;
-  "debug") VERBOSE_OPT="-vvv" ;;
-  "trace") VERBOSE_OPT="-vvvv" ;;
+  "warn") VERBOSE_OPT=" -v";;
+  "info") VERBOSE_OPT=" -vv" ;;
+  "debug") VERBOSE_OPT=" -vvv" ;;
+  "trace") VERBOSE_OPT=" -vvvv" ;;
 esac
 
 if [ "$SKIP_AUTO_PORT_FORWARDING" = true ]; then
@@ -111,7 +111,7 @@ fi
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 
-RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=${LOG_LEVEL},qp2p=${LOG_EVEL} sn_node \
+RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=${LOG_LEVEL},qp2p=${LOG_EVEL} sn_node\
 ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
 ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT}
 
@@ -120,7 +120,7 @@ for (( i = 1; i <= NUM_NODES; i++ ))
   CON_PORT=$(($CON_PORT + $i))
   PUB_PORT=$(($PUB_PORT + $i))
 
-  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=${LOG_LEVEL},qp2p=${LOG_LEVEL} sn_node \
+  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 RUST_LOG=safe_network=${LOG_LEVEL},qp2p=${LOG_LEVEL} sn_node\
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
   ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
 
