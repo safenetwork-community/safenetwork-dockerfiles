@@ -1,4 +1,4 @@
-name: Publish safenode-ipv6 package (ghcr.io)
+name: Publish safenode package (ghcr.io)
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -7,7 +7,7 @@ name: Publish safenode-ipv6 package (ghcr.io)
 
 on:
   schedule:
-    - cron: '10 0 1 * *'
+    - cron: '55 10 1 * *'
   push:
     branches: [ ubuntu ]
     # Publish semver tags as releases.
@@ -18,7 +18,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: safenetwork-community/safenode-ipv6
+  IMAGE_NAME: safenetwork-community/safenode
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+ 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
  
@@ -63,7 +63,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: src/safenode-ipv6/Dockerfile
+          file: src/safenode/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}

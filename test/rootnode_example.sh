@@ -1,8 +1,9 @@
 #!/bin/bash
 
-../run_safenode.sh 
-  --name join_test \
-  --verbose -vv \
+../scripts/run_safenode.sh \
+  --name root_test \
+  -vv \
+  --num-nodes 15 \
   --skip-auto-port-forwarding true \
   --idle-timeout-msec 5500 \
   --keep-alive-interval-msec 4000 \
@@ -12,3 +13,4 @@
   --pub-port 12000 \
   --log-dir ~/.safe/node/node_dir_0\
   --root-dir ~/.safe/node/node_dir_0\
+  --first true
