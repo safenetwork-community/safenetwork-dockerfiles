@@ -2,7 +2,7 @@
 
 ../bin/snc-node \
   --name root_test \
-  --verbose -vv \
+  --log-level "debug" \
   --num-nodes 15 \
   --skip-auto-port-forwarding true \
   --idle-timeout-msec 5500 \
