@@ -15,7 +15,7 @@ case "$PLATFORM_ARCH" in
 esac
 
 # Create safe folders
-mkdir -p ~/.safe/{bin,cli,node}
+mkdir -p ~/.safe/{cli,node}
 
 # Install the safe network
 curl -L $(curl --silent https://api.github.com/repos/maidsafe/safe_network/releases/latest | \

@@ -83,10 +83,6 @@ EXPOSE 443
 # Assign volume
 VOLUME /home/admin/.safe/cli
 
-# Download safe node test scripts
-RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/test/test_setup.sh -o /tmp/test_setup.sh
-RUN bash /tmp/test_setup.sh
-
 # Download safe node run script
 RUN curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/ubuntu/scripts/run_safenode.sh -o ~/.safe/bin/run_safenode.sh
 RUN chmod a+x ~/.safe/bin/run_safenode.sh
