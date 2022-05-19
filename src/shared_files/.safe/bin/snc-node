@@ -115,8 +115,7 @@ PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 
 RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
 ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT}
-
+${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT} &
 
 if [ $NUM_NODES > 1 ]; then
 
@@ -133,7 +132,7 @@ if [ $NUM_NODES > 1 ]; then
 
     RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
     ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-    ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
+    ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
 
     done
 fi
@@ -143,4 +142,8 @@ if [ "$FIRST" = true ]; then
   safe networks switch ${NETWORK_NAME}
 fi 
 
+# Wait for any process to exit
+wait -n
 
+# Exit with status of process that exited first
+exit $?
