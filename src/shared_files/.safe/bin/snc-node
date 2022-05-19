@@ -117,16 +117,26 @@ RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
 ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
 ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT}
 
-for (( i = 1; i <= NUM_NODES; i++ ))
-  do
-  CON_OPT=" --local-addr ${CON_IP}:$(($CON_PORT + $i))"
-  PUB_OPT=" --public-addr ${PUB_IP}:$(($PUB_PORT + $i))"
 
-  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
-  ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
+if [ $NUM_NODES > 1 ]; then
 
-  done
+  LOG_DIR_BASE=${LOG_DIR%/*}
+  ROOT_DIR_BASE=${ROOT_DIR%/*}
+
+  for (( i = 1; i <= NUM_NODES; i++ ))
+    do
+    CON_OPT=" --local-addr ${CON_IP}:$(($CON_PORT + $i))"
+    PUB_OPT=" --public-addr ${PUB_IP}:$(($PUB_PORT + $i))"
+
+    LOG_DIR_OPT=" --log-dir ${LOG_DIR_BASE}/node_dir_$i"
+    ROOT_DIR_OPT=" --root-dir ${ROOT_DIR_BASE}/node_dir_$i" 
+
+    RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
+    ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
+    ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
+
+    done
+fi
 
 if [ "$FIRST" = true ]; then 
   safe networks add ${NETWORK_NAME}
