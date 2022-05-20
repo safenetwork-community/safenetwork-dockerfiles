@@ -117,6 +117,11 @@ RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
 ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
 ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT} &
 
+if [ "$FIRST" = true ]; then 
+  safe networks add ${NETWORK_NAME}
+  safe networks switch ${NETWORK_NAME}
+fi 
+
 if [ $NUM_NODES > 1 ]; then
 
   LOG_DIR_BASE=${LOG_DIR%/*}
@@ -136,11 +141,6 @@ if [ $NUM_NODES > 1 ]; then
 
     done
 fi
-
-if [ "$FIRST" = true ]; then 
-  safe networks add ${NETWORK_NAME}
-  safe networks switch ${NETWORK_NAME}
-fi 
 
 # Wait for any process to exit
 wait -n
