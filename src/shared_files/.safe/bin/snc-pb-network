@@ -1,0 +1,8 @@
+#!/bin/bash
+
+conn_file=~/.safe/node/node_connection_info.config
+if [ -f "$conn_file"]; then
+  cat pbincli send --file $conn_file 
+else
+  echo -e "node_connection_info.config file does not exist."
+fi
