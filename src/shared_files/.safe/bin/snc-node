@@ -15,6 +15,8 @@ NUM_NODES=1
 IDLE_TIMEOUT_MSEC=4000
 KEEP_ALIVE_INTERVAL_MSEC=5500
 
+RE_NUMBER='^[0-9]+$'
+
 help()
 {
   sn_node --help
@@ -88,11 +90,11 @@ if [ "$SKIP_AUTO_PORT_FORWARDING" = true ]; then
   SKIP_AUTO_PORT_FORWARDING_OPT=" --skip-auto-port-forwarding"
 fi
 
-if [ "$IDLE_TIMEOUT_MSEC" = true ]; then
+if [[ $IDLE_TIMEOUT_MSEC ~= $RE_NUMBER ]]; then
   IDLE_TIMEOUT_MSEC_OPT=" --idle-timeout-msec ${IDLE_TIMEOUT_MSEC}" 
 fi
 
-if [ "$KEEP_ALIVE_INTERVAL_MSEC" = true ]; then
+if [[ $KEEP_ALIVE_INTERVAL_MSEC ~= $RE_NUMBER ]]; then
   KEEP_ALIVE_INTERVAL_MSEC_OPT=" --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC}" 
 fi
 
