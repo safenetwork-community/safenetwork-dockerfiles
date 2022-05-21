@@ -127,7 +127,7 @@ if [ $NUM_NODES > 1 ]; then
   LOG_DIR_BASE=${LOG_DIR%/*}
   ROOT_DIR_BASE=${ROOT_DIR%/*}
 
-  for (( i = 1; i <= NUM_NODES; i++ ))
+  for (( i = 1; i < NUM_NODES; i++ ))
     do
     CON_OPT=" --local-addr ${CON_IP}:$(($CON_PORT + $i))"
     PUB_OPT=" --public-addr ${PUB_IP}:$(($PUB_PORT + $i))"
