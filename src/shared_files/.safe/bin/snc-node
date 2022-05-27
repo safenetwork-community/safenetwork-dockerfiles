@@ -14,8 +14,11 @@ LOG_LEVEL=error
 NUM_NODES=1
 IDLE_TIMEOUT_MSEC=4000
 KEEP_ALIVE_INTERVAL_MSEC=5500
+IP_NUMBER=0
 
 RE_NUMBER='^[0-9]+$'
+RE_IPV4='^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+RE_IPV6='^([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$'
 
 help()
 {
@@ -45,6 +48,112 @@ usage()
     [ --root-dir ROOT_DIR ]
     [ --first FIRST ]"
   exit 2
+}
+
+next_ipv4() {
+  IP=$1
+  IP_VALUES=(${IP//"."/ })
+  for ((i=$((${#IP_VALUES[@]}-1)); i >=0; i--)); do
+    IP_VALUES[$i]=$((${IP_VALUES[$i]} + 1)) 
+    if [ ${IP_VALUES[$i]} -gt 255 ]; then
+      IP_VALUES[$i]=0
+    else
+      break
+    fi
+  done
+  NEXT_IP=$(printf '%d.%d.%d.%d\n' `echo ${IP_VALUES[@]}`)
+  echo "$NEXT_IP"
+}
+
+next_ipv6() {
+  IP=$(expand_ipv6 $1)
+  IP_VALUES=(${IP//":"/ })
+  for ((i=$((${#IP_VALUES[@]}-1)); i >=0; i--)); do
+    IP_VALUES[$i]=$(printf "%x\n" $((16#${IP_VALUES[$i]} + 1))) 
+    if [[ 0x${IP_VALUES[$i]} -gt 0xffff ]]; then
+      IP_VALUES[$i]=0
+    else
+      break
+    fi
+  done
+  NEXT_IP=$(printf '%s:%s:%s:%s:%s:%s:%s:%s\n' `echo ${IP_VALUES[*]}`)
+  echo "$NEXT_IP"
+}
+
+# helper to convert hex to dec (portable version)
+hex2dec(){
+    [ "$1" != "" ] && printf "%d" "$(( 0x$1 ))"
+}
+
+expand_ipv6() {
+    ip=$1
+
+    # prepend 0 if we start with :
+    echo $ip | grep -qs "^:" && ip="0${ip}"
+
+    # expand ::
+    if echo $ip | grep -qs "::"; then
+        colons=$(echo $ip | sed 's/[^:]//g')
+        missing=$(echo ":::::::::" | sed "s/$colons//")
+        expanded=$(echo $missing | sed 's/:/:0/g')
+        ip=$(echo $ip | sed "s/::/$expanded/")
+    fi
+
+    blocks=$(echo $ip | grep -o "[0-9a-f]\+")
+    set $blocks
+
+    printf "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x\n" \
+        $(hex2dec $1) \
+        $(hex2dec $2) \
+        $(hex2dec $3) \
+        $(hex2dec $4) \
+        $(hex2dec $5) \
+        $(hex2dec $6) \
+        $(hex2dec $7) \
+        $(hex2dec $8)
+}
+
+# returns a compressed ipv6 address under the form recommended by RFC5952
+compress_ipv6() {
+    ip=$1
+
+    blocks=$(echo $ip | grep -o "[0-9a-f]\+")
+    set $blocks
+
+    # compress leading zeros
+    ip=$(printf "%x:%x:%x:%x:%x:%x:%x:%x\n" \
+        $(hex2dec $1) \
+        $(hex2dec $2) \
+        $(hex2dec $3) \
+        $(hex2dec $4) \
+        $(hex2dec $5) \
+        $(hex2dec $6) \
+        $(hex2dec $7) \
+        $(hex2dec $8)
+    )
+
+    # prepend : for easier matching
+    ip=:$ip
+
+    # :: must compress the longest chain
+    for pattern in :0:0:0:0:0:0:0:0 \
+            :0:0:0:0:0:0:0 \
+            :0:0:0:0:0:0 \
+            :0:0:0:0:0 \
+            :0:0:0:0 \
+            :0:0; do
+        if echo $ip | grep -qs $pattern; then
+            ip=$(echo $ip | sed "s/$pattern/::/")
+            # if the substitution occured before the end, we have :::
+            ip=$(echo $ip | sed 's/:::/::/')
+            break # only one substitution
+        fi
+    done
+
+    # remove prepending : if necessary
+    echo $ip | grep -qs "^:[^:]" && ip=$(echo $ip | sed 's/://')
+
+    echo $ip
 }
 
 PARSED_ARGUMENTS=$(getopt -o $SHORT_OPTS --longoptions $LONG_OPTS --name $PROG_NAME -- "$@")
@@ -112,6 +221,25 @@ else
   FIRST_OPT=" --first"
 fi 
 
+if [[ $CON_IP ~= $RE_IPV4 ]]; then
+  @OCTETS = split(/./, $CON_IP)
+  for OCTET in (@OCTETS) 
+    do
+    IP_NUMBER=$(($IP_NUMBER << 8))
+    IP_NUMBER=$(($IP_NUMBER | $OCTET))
+    done
+elif [[ $CON_IP ~= $RE_IPV6 ]]; then
+  @HEXADECETS = split(/:/, $CON_IP)
+  for $HEXADECET in (@HEXADECETS) 
+    do
+    IP_NUMBER=$((0x$IP_NUMBER << 16))
+    IP_NUMBER=$((0x$IP_NUMBER | $HEXADECET))
+    done
+else
+  echo "Unexpected local IP type: $CON_IP."
+  exit 2
+fi
+
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 
@@ -125,13 +253,20 @@ if [ "$FIRST" = true ]; then
 fi 
 
 if [ $NUM_NODES > 1 ]; then
-
+  
   LOG_DIR_BASE=${LOG_DIR%/*}
   ROOT_DIR_BASE=${ROOT_DIR%/*}
 
   for (( i = 1; i < NUM_NODES; i++ ))
     do
-    CON_OPT=" --local-addr ${CON_IP}:$(($CON_PORT + $i))"
+    
+    if [[ $CON_IP ~= $RE_IPV4 ]]; then
+      CON_IP=$(next_ipv4 $CON_IP) 
+    elif [[ $CON_IP ~= $RE_IPV6 ]]; then    
+      CON_IP=$(next_ipv6 $CON_IP) 
+    fi
+
+    CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
     PUB_OPT=" --public-addr ${PUB_IP}:$(($PUB_PORT + $i))"
 
     LOG_DIR_OPT=" --log-dir ${LOG_DIR_BASE}/node_dir_$i"
