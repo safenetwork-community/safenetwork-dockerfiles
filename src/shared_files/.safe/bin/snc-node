@@ -199,11 +199,11 @@ if [ "$SKIP_AUTO_PORT_FORWARDING" = true ]; then
   SKIP_AUTO_PORT_FORWARDING_OPT=" --skip-auto-port-forwarding"
 fi
 
-if [[ $IDLE_TIMEOUT_MSEC ~= $RE_NUMBER ]]; then
+if [[ $IDLE_TIMEOUT_MSEC =~ $RE_NUMBER ]]; then
   IDLE_TIMEOUT_MSEC_OPT=" --idle-timeout-msec ${IDLE_TIMEOUT_MSEC}" 
 fi
 
-if [[ $KEEP_ALIVE_INTERVAL_MSEC ~= $RE_NUMBER ]]; then
+if [[ $KEEP_ALIVE_INTERVAL_MSEC =~ $RE_NUMBER ]]; then
   KEEP_ALIVE_INTERVAL_MSEC_OPT=" --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC}" 
 fi
 
@@ -220,25 +220,6 @@ if [ "$FIRST" = false ]; then
 else
   FIRST_OPT=" --first"
 fi 
-
-if [[ $CON_IP ~= $RE_IPV4 ]]; then
-  @OCTETS = split(/./, $CON_IP)
-  for OCTET in (@OCTETS) 
-    do
-    IP_NUMBER=$(($IP_NUMBER << 8))
-    IP_NUMBER=$(($IP_NUMBER | $OCTET))
-    done
-elif [[ $CON_IP ~= $RE_IPV6 ]]; then
-  @HEXADECETS = split(/:/, $CON_IP)
-  for $HEXADECET in (@HEXADECETS) 
-    do
-    IP_NUMBER=$((0x$IP_NUMBER << 16))
-    IP_NUMBER=$((0x$IP_NUMBER | $HEXADECET))
-    done
-else
-  echo "Unexpected local IP type: $CON_IP."
-  exit 2
-fi
 
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
@@ -260,9 +241,9 @@ if [ $NUM_NODES > 1 ]; then
   for (( i = 1; i < NUM_NODES; i++ ))
     do
     
-    if [[ $CON_IP ~= $RE_IPV4 ]]; then
+    if [[ $CON_IP =~ $RE_IPV4 ]]; then
       CON_IP=$(next_ipv4 $CON_IP) 
-    elif [[ $CON_IP ~= $RE_IPV6 ]]; then    
+    elif [[ $CON_IP =~ $RE_IPV6 ]]; then    
       CON_IP=$(next_ipv6 $CON_IP) 
     fi
 
