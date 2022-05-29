@@ -11,6 +11,6 @@
   --con-port 12000 \
   --pub-ip 195.240.113.178 \
   --pub-port 12000 \
-  --log-dir ~/.safe/node/node_dir_0\
-  --root-dir ~/.safe/node/node_dir_0\
+  --log-dir ~/.safe/node/node_dir_0 \
+  --root-dir ~/.safe/node/node_dir_0 \
   --first true
