@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# turn on bash's job control
+set -m
+
 PROG_NAME=run_safenode
 
 SHORT_OPTS=hVv
@@ -215,32 +218,31 @@ if [ -n "$ROOT_DIR" ]; then
   ROOT_DIR_OPT=" --root-dir ${ROOT_DIR}" 
 fi
 
-if [ "$FIRST" = false ]; then
-  safe networks switch ${NETWORK_NAME}
-else
-  FIRST_OPT=" --first"
-fi 
-
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 
-RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
-${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}${FIRST_OPT} &
-
-if [ "$FIRST" = true ]; then 
+if [ "$FIRST" = true ]; then
+  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
+  ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
+  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} --first &
   safe networks add ${NETWORK_NAME}
   safe networks switch ${NETWORK_NAME}
-fi 
+else
+  safe networks switch ${NETWORK_NAME}
+  RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
+  ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
+  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
+fi
+NUM_NODES=$(($NUM_NODES -1))
 
-if [ $NUM_NODES > 1 ]; then
+if [ $NUM_NODES -ne 0 ]; then
   
   LOG_DIR_BASE=${LOG_DIR%/*}
   ROOT_DIR_BASE=${ROOT_DIR%/*}
 
-  for (( i = 1; i < NUM_NODES; i++ ))
+  for (( i = 0; i < NUM_NODES; i++ ))
     do
-    
+      
     if [[ $CON_IP =~ $RE_IPV4 ]]; then
       CON_IP=$(next_ipv4 $CON_IP) 
     elif [[ $CON_IP =~ $RE_IPV6 ]]; then    
@@ -257,11 +259,9 @@ if [ $NUM_NODES > 1 ]; then
     ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
     ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
 
-    done
+  done
 fi
 
-# Wait for any process to exit
-wait -n
-
-# Exit with status of process that exited first
-exit $?
+# now we bring the primary process back into the foreground
+# and leave it there
+fg %1
