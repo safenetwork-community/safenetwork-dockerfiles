@@ -90,7 +90,7 @@ RUN bash /tmp/sn_add_networks.sh
 # Launch safe node
 ENTRYPOINT ~/.safe/bin/snc-node --name ${NETWORK_NAME} \
   --log-level ${LOG_LEVEL} \
-  --num-node ${NUM_NODES} \
+  --num-nodes ${NUM_NODES} \
   --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING} \
   --idle-timeout-msec ${IDLE_TIMEOUT_MSEC} \
   --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
