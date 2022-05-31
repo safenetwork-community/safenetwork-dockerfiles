@@ -233,14 +233,13 @@ else
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
   ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
 fi
-NUM_NODES=$(($NUM_NODES -1))
 
-if [ $NUM_NODES -ne 0 ]; then
+if [ $NUM_NODES > 1 ]; then
   
   LOG_DIR_BASE=${LOG_DIR%/*}
   ROOT_DIR_BASE=${ROOT_DIR%/*}
 
-  for (( i = 0; i < NUM_NODES; i++ ))
+  for (( i = 1; i < NUM_NODES; i++ ))
     do
       
     if [[ $CON_IP =~ $RE_IPV4 ]]; then
