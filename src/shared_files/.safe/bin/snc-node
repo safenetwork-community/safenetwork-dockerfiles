@@ -23,6 +23,9 @@ RE_NUMBER='^[0-9]+$'
 RE_IPV4='^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
 RE_IPV6='^([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$'
 
+APP_NAME="sn_node"
+APP_COUNT=$(ps ax | grep $APP_NAME | grep -v grep | wc -l)
+
 help()
 {
   sn_node --help
@@ -225,6 +228,11 @@ if [ "$FIRST" = true ]; then
   RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
   ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} --first &
+  while [ "$APP_COUNT" -gt "0" ]
+  do
+    sleep 1
+    APP_COUNT=$(ps ax | grep $APP_NAME | grep -v grep | wc -l)
+  done
   safe networks add ${NETWORK_NAME}
   safe networks switch ${NETWORK_NAME}
 else
