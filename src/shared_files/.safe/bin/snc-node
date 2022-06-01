@@ -231,7 +231,7 @@ if [ "$FIRST" = true ]; then
   while [ "$APP_COUNT" -eq "0" ]
   do
     sleep 1
-    APP_COUNT=$(psgrep -x $APP_NAME | wc -l)
+    APP_COUNT=$(pgrep -x $APP_NAME | wc -l)
   done
   safe networks add ${NETWORK_NAME}
   safe networks switch ${NETWORK_NAME}
