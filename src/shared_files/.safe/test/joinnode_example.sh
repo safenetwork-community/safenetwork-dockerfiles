@@ -2,6 +2,7 @@
 
 ../bin/snc-node \
   --name join_test \
+  --num-nodes 1 \
   --log-level "debug" \
   --skip-auto-port-forwarding true \
   --idle-timeout-msec 5500 \

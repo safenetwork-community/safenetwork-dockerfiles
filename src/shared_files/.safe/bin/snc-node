@@ -221,6 +221,12 @@ if [ -n "$ROOT_DIR" ]; then
   ROOT_DIR_OPT=" --root-dir ${ROOT_DIR}" 
 fi
 
+if [ "$CON_IP" -eq "local" ]; then
+  CON_IP=127.0.0.1
+elif [ "$CON_IP" -eq "ip_con" ]; then 
+  CON_IP=$(ip -4 -o addr show up primary scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
+fi
+
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 
@@ -242,7 +248,7 @@ else
   ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
 fi
 
-if [ $NUM_NODES > 1 ]; then
+if [ $NUM_NODES -gt 1 ]; then
   
   LOG_DIR_BASE=${LOG_DIR%/*}
   ROOT_DIR_BASE=${ROOT_DIR%/*}
