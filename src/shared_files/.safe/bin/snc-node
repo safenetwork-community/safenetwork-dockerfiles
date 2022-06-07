@@ -222,7 +222,7 @@ if [ -n "$ROOT_DIR" ]; then
 fi
 
 if [ "$CON_IP" == "ip_con" ]; then 
-  CON_IP=$(ip -4 -o addr show up primary scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
+  CON_IP=$(ip -4 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
 elif [ "$CON_IP" == "local" ]; then
   CON_IP=127.0.0.1
 fi
