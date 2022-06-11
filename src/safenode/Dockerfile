@@ -62,7 +62,6 @@ RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool
 # Default env values
 ENV NETWORK_NAME=
 ENV LOG_LEVEL="error"
-ENV NUM_NODES=1
 ENV SKIP_AUTO_PORT_FORWARDING=true
 ENV IDLE_TIMEOUT_MSEC=5500
 ENV KEEP_ALIVE_INTERVAL_MSEC=4000
@@ -70,8 +69,8 @@ ENV CON_IP=10.88.0.2
 ENV CON_PORT=12000
 ENV PUB_IP=10.88.0.2
 ENV PUB_PORT=12000
-ENV LOG_DIR="/home/admin/.safe/node/node_dir_0"
-ENV ROOT_DIR="/home/admin/.safe/node/node_dir_0"
+ENV LOG_DIR="/home/admin/.safe/node/sn_node_dir"
+ENV ROOT_DIR="/home/admin/.safe/node/sn_node_dir"
 ENV FIRST=false
 
 # Expose PORT of the node
@@ -90,7 +89,6 @@ RUN bash /tmp/sn_add_networks.sh
 # Launch safe node
 ENTRYPOINT ~/.safe/bin/snc-node --name ${NETWORK_NAME} \
   --log-level ${LOG_LEVEL} \
-  --num-nodes ${NUM_NODES} \
   --skip-auto-port-forwarding ${SKIP_AUTO_PORT_FORWARDING} \
   --idle-timeout-msec ${IDLE_TIMEOUT_MSEC} \
   --keep-alive-interval-msec ${KEEP_ALIVE_INTERVAL_MSEC} \
