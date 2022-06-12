@@ -60,14 +60,14 @@ RUN if [ "$TARGETPLATFORM" != "linux/arm/v7"]; then cargo install vdash; fi
 RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool; fi
 
 # Default env values
-ENV NETWORK_NAME=
+ENV NETWORK_NAME=comnet_local
 ENV LOG_LEVEL="error"
 ENV SKIP_AUTO_PORT_FORWARDING=true
 ENV IDLE_TIMEOUT_MSEC=5500
 ENV KEEP_ALIVE_INTERVAL_MSEC=4000
-ENV CON_IP=10.88.0.2
+ENV CON_IP=local_ipv6
 ENV CON_PORT=12000
-ENV PUB_IP=10.88.0.2
+ENV PUB_IP=local_ipv6
 ENV PUB_PORT=12000
 ENV LOG_DIR="/home/admin/.safe/node/sn_node_dir"
 ENV ROOT_DIR="/home/admin/.safe/node/sn_node_dir"

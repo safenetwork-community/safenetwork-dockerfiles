@@ -120,14 +120,20 @@ if [ -n "$ROOT_DIR" ]; then
   ROOT_DIR_OPT=" --root-dir ${ROOT_DIR}" 
 fi
 
-if [ "$CON_IP" == "ipv4_con" ]; then 
+if [ "$CON_IP" == "con_ipv4" ]; then 
   CON_IP=$(ip -4 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
-elif [ "$CON_IP" == "ipv6_con" ]; then 
+elif [ "$CON_IP" == "con_ipv6" ]; then 
   CON_IP=$(ip -6 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
-elif [ "$CON_IP" == "ipv4_local" ]; then
+elif [ "$CON_IP" == "local_ipv4" ]; then
    CON_IP=127.0.0.1
-elif [ "$CON_IP" == "ipv6_local" ]; then
+elif [ "$CON_IP" == "local_ipv6" ] || [ "$CON_IP" == "localhost" ]; then
    CON_IP=::1
+fi
+
+if [ "$PUB_IP" == "con_ipv4" ]; then 
+  PUB_IP=$(ip -4 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
+elif [ "$PUB_IP" == "con_ipv6" ]; then 
+  PUB_IP=$(ip -6 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
 fi
 
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
@@ -139,7 +145,7 @@ fi
 if [ "$FIRST" = true ]; then
   RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} --first &
+  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} --first
   while [ "$APP_COUNT" -eq "0" ]
   do
     sleep 1
@@ -151,5 +157,8 @@ else
   safe networks switch ${NETWORK_NAME}
   RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
+  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
 fi
+
+# Put the primary process into the foreground and leave it there
+#fg %1
