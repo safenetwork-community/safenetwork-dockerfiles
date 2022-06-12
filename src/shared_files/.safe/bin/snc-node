@@ -25,8 +25,6 @@ IP_NUMBER=0
 # RegEx #
 
 RE_NUMBER='^[0-9]+$'
-RE_IPV4='^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
-RE_IPV6='^([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$'
 
 # Safety check parameters for `safe network switch` #
 
@@ -138,14 +136,14 @@ fi
 
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 
-if [ "$CON_IP" -ne "127.0.0.1" ]; then 
+if [ "$CON_IP" != "127.0.0.1" ]; then 
   PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 fi
 
 if [ "$FIRST" = true ]; then
   RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} --first
+  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} --first &
   while [ "$APP_COUNT" -eq "0" ]
   do
     sleep 1
@@ -157,8 +155,8 @@ else
   safe networks switch ${NETWORK_NAME}
   RUST_BACKTRACE=full COLORBT_SHOW_HIDDEN=1 sn_node\
   ${VERBOSE_OPT}${IDLE_TIMEOUT_MSEC_OPT}${KEEP_ALIVE_INTERVAL_MSEC_OPT}${SKIP_AUTO_PORT_FORWARDING_OPT}\
-  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT}
+  ${CON_OPT}${PUB_OPT}${LOG_DIR_OPT}${ROOT_DIR_OPT} &
 fi
 
 # Put the primary process into the foreground and leave it there
-#fg %1
+fg %1
