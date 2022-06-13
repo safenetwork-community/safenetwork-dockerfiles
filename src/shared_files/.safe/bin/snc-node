@@ -118,17 +118,21 @@ if [ -n "$ROOT_DIR" ]; then
   ROOT_DIR_OPT=" --root-dir ${ROOT_DIR}" 
 fi
 
-if [ "$CON_IP" == "con_ipv4" ]; then 
-  CON_IP=$(ip -4 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
-elif [ "$CON_IP" == "con_ipv6" ]; then 
-  CON_IP=$(ip -6 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
-elif [ "$CON_IP" == "local_ipv4" ]; then
-   CON_IP=127.0.0.1
-elif [ "$CON_IP" == "local_ipv6" ] || [ "$CON_IP" == "localhost" ]; then
-   CON_IP=::1
+if [[ "$CON_IP" =~ "con"  ]]; then
+  if [[ "$CON_IP" =~ "ipv4" ]]; then
+    CON_IP=$(ip -4 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
+  elif [ "$CON_IP" =~ "ipv6" ]; then 
+    CON_IP=$(ip -6 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
+  fi
+elif [ "$CON_IP" =~ "local" ]; then
+  if [ "$CON_IP" =~ "ipv4" ]; then 
+    CON_IP=127.0.0.1
+  elif [[ "$CON_IP" =~ "ipv6" ] || [ "$CON_IP" =~ "host" ]]; then
+    CON_IP=[::1]
+  fi
 fi
 
-if [ "$PUB_IP" == "con_ipv4" ]; then 
+if [ "$PUB_IP" == "con_ipv4" ] || ; then 
   PUB_IP=$(ip -4 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
 elif [ "$PUB_IP" == "con_ipv6" ]; then 
   PUB_IP=$(ip -6 -o addr show up scope global | while read -r num dev fam addr rest; do echo ${addr%/*}; done | head -n 1)
@@ -136,7 +140,7 @@ fi
 
 CON_OPT=" --local-addr ${CON_IP}:${CON_PORT}"
 
-if [ "$CON_IP" != "127.0.0.1" ]; then 
+if [[ "$CON_IP" != "127.0.0.1" && "$CON_IP" != "[::1]" ]]; then 
   PUB_OPT=" --public-addr ${PUB_IP}:${PUB_PORT}"
 fi
 
