@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Safe network node log directory
-install -d -o root -g admin -m 750 /var/log/sn_node
+ls -lha /var/log
+install -v -d -o root -g admin -m 750 /var/log/sn_node
+ls -lha /var/log
 
 # Nvim support files
 mkdir -p /usr/local/share/lua/5.1
