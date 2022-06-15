@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ERROR_LOG=""
+NODE_PATH=~/var/logs/safenode
+TWO_NEW_LINES=$'\n\n'
+
+if [ -d $node_path ]; then
+  LOG_PATH=$(ls -t1 $node_path/sn_node.log* 2>/dev/null | head -n 1)
+  if [ -n $LOG_PATH ]; then
+    ERROR_MSG=$(tac $LOG_PATH | sed -n '/ERROR/{N;N;p;q}' | tac)
+    if [ -n "$ERROR_MSG" ]; then
+      ERROR_LOG+="-- ${LOG_PATH} --${TWO_NEW_LINES}${ERROR_MSG}${TWO_NEW_LINES}"
+    fi
+  fi
+fi
+
+if [ -n "$ERROR_LOG" ]; then
+  pbincli send --text "$ERROR_LOG"
+else
+  echo "No node logs found in error."
+fi
