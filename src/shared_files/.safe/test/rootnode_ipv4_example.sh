@@ -10,6 +10,6 @@
   --con-port 12000 \
   --pub-ip local_ipv4 \
   --pub-port 12000 \
-  --log-dir ~/.safe/node/sn_node_dir \
-  --root-dir ~/.safe/node/sn_node_dir \
+  --log-dir /var/logs/safenode \
+  --root-dir ~/.safe/node/safenode \
   --first true

@@ -69,8 +69,8 @@ ENV CON_IP=local_ipv6
 ENV CON_PORT=12000
 ENV PUB_IP=local_ipv6
 ENV PUB_PORT=12000
-ENV LOG_DIR="/home/admin/.safe/node/sn_node_dir"
-ENV ROOT_DIR="/home/admin/.safe/node/sn_node_dir"
+ENV LOG_DIR="/var/logs/safenode"
+ENV ROOT_DIR="/home/admin/.safe/node/safenode"
 ENV FIRST=false
 
 # Expose PORT of the node

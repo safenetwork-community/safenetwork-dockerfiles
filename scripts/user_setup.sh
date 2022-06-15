@@ -6,7 +6,7 @@ curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dock
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.bashrc -o ~/.bashrc
 
 # Add safe network bin files
-curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/snc-pb-nodes -o ~/.safe/bin/snc-pb-nodes
+curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/snc-pb-node -o ~/.safe/bin/snc-pb-node
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/snc-pb-network -o ~/.safe/bin/snc-pb-network
 curl -s https://raw.githubusercontent.com/safenetwork-community/safenetwork-dockerfiles/latest/src/shared_files/.safe/bin/snc-node -o ~/.safe/bin/snc-node
 chmod a+x ~/.safe/bin/*
