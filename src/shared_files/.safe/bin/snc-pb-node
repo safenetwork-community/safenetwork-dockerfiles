@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ERROR_LOG=""
-NODE_PATH=~/var/logs/safenode
+NODE_PATH=~/var/log/sn_node
 TWO_NEW_LINES=$'\n\n'
 
 if [ -d $node_path ]; then
