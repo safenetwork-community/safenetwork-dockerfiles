@@ -59,7 +59,7 @@ RUN pip install pbincli
 
 # Install safe network tools
 RUN if [ "$TARGETPLATFORM" != "linux/arm/v7"]; then cargo install vdash; fi
-RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool; fi
+# RUN if [ "$TARGETFLATFORM" != "linux/arm/v7"]; then cargo install sn_launch_tool; fi
 
 # Default env values
 ENV NETWORK_NAME=comnet_local
