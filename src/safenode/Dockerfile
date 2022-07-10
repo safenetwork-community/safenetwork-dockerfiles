@@ -15,6 +15,9 @@ RUN apk add bash
 # Install download tools
 RUN apk add curl jq
 
+# Install network tools
+RUN apk add bind-tools
+
 # Install progamming language compilers and package managers
 RUN apk add build-base
 RUN apk add python3
