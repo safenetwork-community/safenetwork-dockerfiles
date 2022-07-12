@@ -2,10 +2,20 @@
 
 # Company networks
 
-safe networks add community-test https://jc-com-net.s3.eu-west-2.amazonaws.com/node_connection_info.config
+## Comnet
 
+safe networks add comnet https://sn-comnet.s3.eu-west-2.amazonaws.com/node_connection_info.config
+
+## Playground
+
+safe networks add playground https://safe-testnet-tool.s3.eu-west-2.amazonaws.com/public-node_connection_info.config
 
 # Community networks
+
+## SouthSide's Network
+
+safe networks add southsidenet https://comnet.snawaffadyke.com/southsidenet.config
+
 
 
 ## Rezosur PRv4 d Folât
