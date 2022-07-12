@@ -2,13 +2,7 @@
 
 # Company networks
 
-## Comnet
 
-safe networks add comnet https://sn-comnet.s3.eu-west-2.amazonaws.com/node_connection_info.config
-
-## Playground
-
-safe networks add playground https://safe-testnet-tool.s3.eu-west-2.amazonaws.com/public-node_connection_info.config
 
 # Community networks
 
