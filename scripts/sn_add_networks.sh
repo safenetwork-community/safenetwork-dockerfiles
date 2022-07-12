@@ -13,4 +13,4 @@ safe networks add sjefolaht_ipv4 https://link.tardigradeshare.io/s/julx763rsy2eg
 
 ## Rezosur PRv6 d Folât
 
-safe networks add sjefolaht https://link.tardigradeshare.io/s/julx763rsy2egbnj2nixoahpobgq/rezosur/koqfig/klik_sjefolaht.config?wrap=0
+safe networks add sjefolaht https://link.tardigradeshare.io/s/julx763rsy2egbnj2nixoahpobgq/rezosur/koqfig/klik_sjefolaht?wrap=0
