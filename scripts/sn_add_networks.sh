@@ -12,11 +12,6 @@ safe networks add playground https://safe-testnet-tool.s3.eu-west-2.amazonaws.co
 
 # Community networks
 
-## SouthSide's Network
-
-safe networks add southsidenet https://comnet.snawaffadyke.com/southsidenet.config
-
-
 
 ## Rezosur PRv4 d Folât
 
